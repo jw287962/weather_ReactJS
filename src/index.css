@@ -114,23 +114,12 @@ button:active {
   left: 35%;
 }
 
-/* .forecastmonth,
-.forecastweek,
-.forecastday {
-  background-color: white;
-  border: 1px solid grey;
-  margin: 2px;
-  position: relative;
-  border-radius: 5px;
-  width: fit-content;
-} */
-
 .forecast {
   margin: 20px 10px;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  overflow: hidden;
 }
 .day {
   margin-top: 20px;
@@ -144,7 +133,9 @@ button:active {
   font-weight: bolder;
   font-size: 24px;
 }
-
+::-webkit-scrollbar {
+  display: none;
+}
 #hot {
   color: rgb(255, 255, 85);
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
@@ -157,7 +148,7 @@ button:active {
 }
 @media only screen and (max-width: 700px) {
   body {
-    overflow-x: hidden;
+    overflow: hidden;
     margin: 0px;
     margin: 0px;
   }
@@ -172,25 +163,24 @@ button:active {
     width: 98vw;
   }
   .forecast {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
     min-width: auto;
-  }
-  .forecastbuttons {
-    position: relative;
-    left: 0px;
-    bottom: 1px;
+    max-width: 700px;
   }
   .weatherdetails {
     flex-direction: column;
     max-width: 98vw;
     margin: 0px;
   }
-  .forecastwrap {
-    display: flex;
-    position: relative;
-    max-width: 99vw;
-    overflow: scroll;
-  }
-  .sundetails {
+}
+@media only screen and (max-width: 550px) {
+  .forecast {
+    overflow-y: scroll;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    min-width: auto;
+    max-width: 400px;
   }
 }
