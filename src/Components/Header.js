@@ -1,7 +1,7 @@
 function header() {
   return (
     <div className="header">
-      WEATHER FORECAST
+      <a href="/">WEATHER FORECAST</a>
       <a href="https://github.com/jw287962/weather">
         <svg
           height="32"

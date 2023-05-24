@@ -1,5 +1,4 @@
 import { format, fromUnixTime } from "date-fns";
-import { promiseEvalUpdateHTML } from "./updateHTML";
 
 import { reducer } from "./Reducer.js";
 

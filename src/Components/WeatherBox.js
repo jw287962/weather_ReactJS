@@ -26,7 +26,11 @@ function WeatherBox({ state, dispatch }) {
   return state.locations.map((location, i) => {
     const data = state.locationsData[location];
     return (
-      <div className="weatherdetails" key={`${location}${i}`}>
+      <a
+        className="weatherdetails"
+        key-location={location}
+        href={`location/${location}`}
+      >
         <div className="location">
           {data.city}, {data.location[0].state}
         </div>
@@ -38,40 +42,14 @@ function WeatherBox({ state, dispatch }) {
 
         <div className="description">{data.description}</div>
         <div className="humidity">Humidity: {data.humidity}</div>
-        {/* <div className="forecastbuttons">
-          <button
-            className="forecastday"
-            id="Madison"
-            onClick={toggleView}
-            data-forecast="1"
-          >
-            1 Day
-          </button>
-          <button
-            className="forecastweek"
-            id="Madison"
-            onClick={toggleView}
-            data-forecast="7"
-          >
-            7 Days
-          </button>
-          <button
-            className="forecastmonth"
-            id="Madison"
-            onClick={toggleView}
-            data-forecast="30"
-          >
-            30 Days
-          </button>
-        </div> */}
+
         <div className="forecastbuttons"></div>
         <div className="sundetails">
           <div>{data.country}</div>
           <div className="sunset">Sunset: {data.sunset}</div>
           <div className="sunrise">Sunrise: {data.sunrise}</div>
         </div>
-        <Forecast></Forecast>
-      </div>
+      </a>
     );
   });
 }

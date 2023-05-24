@@ -1,6 +1,7 @@
 function Forecast() {
   return (
     <div>
+      FORECAST
       <div></div>
     </div>
   );
