@@ -35,7 +35,7 @@ body {
   font-weight: 900;
   font-size: 40px;
 }
-.header > a {
+a {
   text-decoration: none;
   color: black;
 }

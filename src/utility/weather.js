@@ -20,9 +20,7 @@ async function fetchWeatherForecast(location = "Madison") {
         "APPID=19d6b05066109b1f4f25ae216d98acf3",
       { mode: "cors" }
     );
-    console.log(city);
     const newData = await promise.json();
-    console.log(newData.list);
     const dataArray = newData.list;
     let i = 0;
     processedForecast[`${city}`] = {};

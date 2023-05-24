@@ -7,12 +7,22 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
-const RouterRoute = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<App />}>
-      <Route path="/location/*" element={<Forecast />} />
-    </Route>
-  )
-);
 
-export default RouterRoute;
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "location/:id",
+    element: <Forecast></Forecast>,
+  },
+]);
+
+export default router;
+
+// createRoutesFromElements(
+//   <Route path="/" element={<App />}>
+//     <Route path="location/*" element={<Forecast />} />
+//   </Route>
+// )

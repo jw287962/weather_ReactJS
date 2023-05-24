@@ -1,7 +1,16 @@
-function header() {
+function Header({ state, dispatch }) {
+  function handleHomeClick(e) {
+    e.preventDefault();
+    dispatch({
+      type: "home",
+    });
+  }
+
   return (
     <div className="header">
-      <a href="/">WEATHER FORECAST</a>
+      <a href="/" onClick={handleHomeClick}>
+        WEATHER FORECAST
+      </a>
       <a href="https://github.com/jw287962/weather">
         <svg
           height="32"
@@ -22,4 +31,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;
