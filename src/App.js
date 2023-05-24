@@ -81,6 +81,7 @@ function App() {
           type="search"
           id="location"
           name="location"
+          placeholder="Search by City Name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
