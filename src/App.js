@@ -65,6 +65,7 @@ function App() {
           activeLocation: data.city,
           locationsData: { ...state.locationsData, [data.city]: { ...data } },
         });
+        setError("");
       })
       .catch((err) => {
         setError("Try Again: No Location Found");
