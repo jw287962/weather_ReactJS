@@ -13,7 +13,10 @@ async function fetchWeatherForecast(location = "Madison") {
     // content.textContent = "loading ... (please wait)";
     const city = location;
     // const city = location.substring(0, location.indexOf(","));
-
+    // const promise = await fetch(
+    //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}appid=19d6b05066109b1f4f25ae216d98acf3`,
+    //   { mode: "cors" }
+    // );
     const promise = await fetch(
       "https://api.openweathermap.org" +
         `/data/2.5/forecast?q=${city}&` +
@@ -36,7 +39,7 @@ async function fetchWeatherForecast(location = "Madison") {
 
       i++;
     });
-
+    return processedForecast;
     // content.textContent = "";
   } catch (err) {
     // content.textContent = "Please type a valid location!";

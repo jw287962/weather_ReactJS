@@ -1,5 +1,6 @@
 function Header({ state, dispatch }) {
   function handleHomeClick(e) {
+    window.history.pushState({ page: "" }, "", "/");
     e.preventDefault();
     dispatch({
       type: "home",

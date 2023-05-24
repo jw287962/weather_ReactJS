@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import reportWebVitals from "./reportWebVitals";
-
+import { BrowserRouter } from "react-router-dom";
 // import { RouterProvider } from "react-router-dom";
 import Reducer from "./ReducerTopComponent";
 
@@ -11,7 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <Reducer></Reducer>
+    <BrowserRouter>
+      <Reducer></Reducer>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

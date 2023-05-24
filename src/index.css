@@ -114,7 +114,7 @@ button:active {
   left: 35%;
 }
 
-.forecastmonth,
+/* .forecastmonth,
 .forecastweek,
 .forecastday {
   background-color: white;
@@ -122,20 +122,24 @@ button:active {
   margin: 2px;
   position: relative;
   border-radius: 5px;
-  width: 70px;
-}
+  width: fit-content;
+} */
 
 .forecast {
-  margin: 20px 0px;
-  display: grid;
-  grid-template-columns: repeat(7, 90px);
+  margin: 20px 10px;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
 }
 .day {
   margin-top: 20px;
   color: black;
+  min-width: 70px;
 }
 
-.temperature {
+.temperature,
+.day {
   font-family: RobotoBold, Arial, Helvetica, sans-serif;
   font-weight: bolder;
   font-size: 24px;
