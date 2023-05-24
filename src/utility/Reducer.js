@@ -1,6 +1,4 @@
 function reducer(state, action) {
-  const locations = [];
-
   // ...
   // const initialState = {
   // locations: [],
@@ -9,13 +7,12 @@ function reducer(state, action) {
   // loading: true,
   // };
   if (action.type === "add_location") {
-    console.log("dispatch add location state", state, action);
     // handle duplicates!!!
     return {
       ...state,
-      locations: [...locations, action.activeLocation],
+      locations: [action.activeLocation, ...state.locations],
       activeLocation: action.activeLocation,
-      locationsData: action.locationsData,
+      locationsData: { ...action.locationsData },
     };
   }
 

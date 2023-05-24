@@ -17,6 +17,7 @@ function App() {
   const [currentLocation, setCurrentLocation] = useState("");
   const [processedData, setProcessData] = useState({});
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,22 +33,48 @@ function App() {
       const processedData = fetchWeatherCurrent(currentLocation);
 
       processedData.then((data) => {
-        console.log(data);
         dispatch({
           type: "add_location",
           activeLocation: data.city,
-          locationsData: { [data.city]: { data } },
+          locationsData: { ...state.locationsData, [data.city]: { ...data } },
         });
       });
       dispatch({ type: "loading", loading: false });
     }
   }, [currentLocation]);
-  console.log("UPDATED STATE", state);
 
+  function processNewLocation(e) {
+    e.preventDefault();
+    console.log();
+    if (
+      state.locationsData[
+        `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
+      ] !== undefined
+    ) {
+      setError("Duplicate Location");
+      return;
+    }
+    dispatch({ type: "loading", loading: true });
+
+    const processedData = fetchWeatherCurrent(searchTerm);
+    processedData
+      .then((data) => {
+        console.log("before", state.locationsData, data.city);
+        dispatch({
+          type: "add_location",
+          activeLocation: data.city,
+          locationsData: { ...state.locationsData, [data.city]: { ...data } },
+        });
+      })
+      .catch((err) => {
+        setError("Try Again: No Location Found");
+      });
+    dispatch({ type: "loading", loading: false });
+  }
   return (
     <div className="App">
       <Header></Header>
-      <form className="locationform" onSubmit={(e) => e.preventDefault()}>
+      <form className="locationform" onSubmit={processNewLocation}>
         <label htmlFor="location">LOCATION:</label>
         <input
           type="search"
@@ -59,6 +86,7 @@ function App() {
       </form>
 
       <div className="loading">
+        {error}
         {state.loading ? "loading...(please wait)" : ""}{" "}
       </div>
       <button className="refresh"></button>
