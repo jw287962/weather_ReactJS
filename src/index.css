@@ -11,3 +11,182 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+@font-face {
+  font-family: IndieFlowerRegular;
+  src: url("./asset/IndieFlower-Regular.ttf");
+}
+@font-face {
+  font-family: RobotoRegular;
+  src: url("./asset/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: RobotoBold;
+  src: url("./asset/Roboto-Bold.ttf");
+}
+body {
+  font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  font-weight: 900;
+  font-size: 40px;
+}
+.content{
+  min-width: 700px;
+
+}
+.refresh{
+  background-color: white;
+  border: none;
+  font-size: 20px;
+  position: relative;
+}
+.refresh:active{
+  top: 2px
+}
+/* LOCATION FORM */
+.locationform{
+
+  font-family: RobotoBold, Arial, Helvetica, sans-serif;
+  margin: 10px;
+}
+#location{
+  border-radius: 5px;
+  border: 2px solid rgb(61, 61, 61);
+  padding: 2px 5px;
+}
+/* content */
+.weatherdetails {
+  position: relative;
+  margin: 10px;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items:flex-start;
+  border-top: 2px solid grey;
+  min-width: 400px;
+  min-height: 200px;
+  font-family: RobotoRegular, Arial, Helvetica, sans-serif;
+  color: rgb(116, 116, 116);
+  font-size: 17px;
+
+}
+
+
+button:active{
+  top: 2px;
+}
+.location,.tempdegree{
+  font-weight: 900;
+  font-size: 25px;
+  color: black;
+}
+.tempsymbol{
+  vertical-align: top;
+  color: black;
+}
+
+.sundetails{
+  position: absolute;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* FORECAST */
+.forecastbuttons{
+  position: relative;
+  left: 35%;
+}
+
+.forecastmonth,.forecastweek,.forecastday{
+  background-color: white;
+  border: 1px solid grey;
+  margin: 2px;
+  position: relative;
+  border-radius: 5px;
+  width: 70px;
+}
+
+.forecast{
+  margin: 20px 0px;
+  display: grid;
+  grid-template-columns: repeat(7,90px);
+}
+.day{
+  margin-top: 20px;
+  color: black;
+}
+
+.temperature{
+  font-family: RobotoBold, Arial, Helvetica, sans-serif;
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+#hot{
+  color: rgb(255, 255, 85);
+  text-shadow:
+  -1px -1px 0 #000,  
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+#cold{
+  color: #8ee8ff;
+  text-shadow:
+  -1px -1px 0 #000,  
+   1px -1px 0 #000,
+   -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+ @media only screen and (max-width: 600px) {
+  body {
+    overflow-x: hidden;
+    margin: 0px;
+    margin: 0px;
+  }
+  .header{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .content{
+    min-width: auto;
+    width: 98vw;
+  }
+  .forecast{
+overflow: scroll;
+    min-width: auto
+  }
+  .forecastbuttons{
+    position: relative;
+    left: 0px;
+    bottom: 1px;
+  }
+  .weatherdetails{
+    flex-direction: column;
+    max-width: 98vw;
+    margin: 0px;
+
+  }
+  .forecastwrap{
+    display: flex;
+    position: relative;
+    max-width: 99vw;
+    overflow: scroll;
+  }
+  .sundetails{
+    position: inherit;
+    top: 0px;
+    left: 0px;
+    
+  }
+}
