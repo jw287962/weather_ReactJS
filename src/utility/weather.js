@@ -14,7 +14,7 @@ async function fetchWeatherForecast(location = "Madison") {
     const city = location;
     // const city = location.substring(0, location.indexOf(","));
     // const promise = await fetch(
-    //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}appid=19d6b05066109b1f4f25ae216d98acf3`,
+    //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=19d6b05066109b1f4f25ae216d98acf3`,
     //   { mode: "cors" }
     // );
     const promise = await fetch(
@@ -24,6 +24,8 @@ async function fetchWeatherForecast(location = "Madison") {
       { mode: "cors" }
     );
     const newData = await promise.json();
+
+    console.log("newdata", newData);
     const dataArray = newData.list;
     let i = 0;
     processedForecast[`${city}`] = {};

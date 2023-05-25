@@ -7,16 +7,21 @@ import { handlePermission } from "./utility/permissions";
 
 import { reducer } from "./utility/Reducer";
 
+import { useContext } from "react";
+import { MyDispatch, MyState } from "./ReducerTopComponent";
+
 function App() {
-  const initialState = {
-    locations: [],
-    activeLocation: "",
-    toggleTime: 1,
-    loading: true,
-    expandLocation: "",
-    locationsData: {},
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const dispatch = useContext(MyDispatch);
+  const state = useContext(MyState);
+  // const initialState = {
+  //   locations: [],
+  //   activeLocation: "",
+  //   toggleTime: 1,
+  //   loading: true,
+  //   expandLocation: "",
+  //   locationsData: {},
+  // };
+  // const [state, dispatch] = useReducer(reducer, initialState);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
   const [error, setError] = useState("");
@@ -105,7 +110,7 @@ function App() {
   }, [state]);
   return (
     <div className="App">
-      <Header state={state} dispatch={dispatch}></Header>
+      <Header></Header>
       {!state.expandLocation && (
         <>
           <form className="locationform" onSubmit={processNewLocation}>

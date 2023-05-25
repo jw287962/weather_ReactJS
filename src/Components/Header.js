@@ -1,7 +1,12 @@
-function Header({ state, dispatch }) {
+import { Link } from "react-router-dom";
+
+import { useContext } from "react";
+
+import { MyDispatch } from "../ReducerTopComponent";
+
+function Header() {
+  const dispatch = useContext(MyDispatch);
   function handleHomeClick(e) {
-    window.history.pushState({ page: "" }, "", "/");
-    e.preventDefault();
     dispatch({
       type: "home",
     });
@@ -9,9 +14,9 @@ function Header({ state, dispatch }) {
 
   return (
     <div className="header">
-      <a href="/" onClick={handleHomeClick}>
+      <Link to={`/`} onClick={handleHomeClick}>
         WEATHER FORECAST
-      </a>
+      </Link>
       <a href="https://github.com/jw287962/weather">
         <svg
           height="32"
