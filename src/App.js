@@ -54,7 +54,13 @@ function App() {
       dispatch({ type: "loading", loading: false });
     }
   }, [currentLocation]);
-
+  function checkDuplicate() {
+    return (
+      state.locationsData[
+        `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
+      ] !== undefined
+    );
+  }
   function processNewLocation(e) {
     e.preventDefault();
     console.log();

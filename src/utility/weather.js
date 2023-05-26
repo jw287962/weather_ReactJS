@@ -6,17 +6,51 @@ import { reducer } from "./Reducer.js";
 let processedData = {};
 // const content = document.querySelector(".loading");
 let processedForecast = {};
+async function fetchHourlyForecast(location = "") {
+  if (location === "") {
+    return;
+  }
+  try {
+    const city = location;
+    const promise = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=19d6b05066109b1f4f25ae216d98acf3`,
+      { mode: "cors" }
+    );
 
+    const newData = await promise.json();
+
+    console.log("hourlyforecastfetch", newData);
+    const dataArray = newData.list;
+    let i = 0;
+    processedForecast[`${city}`] = {};
+
+    dataArray.forEach((element) => {
+      processedForecast[`${city}`][i] = { date: 0 };
+
+      processedForecast[`${city}`][`${i}`].date = getDate(element, i);
+
+      processedForecast[`${city}`][`${i}`].temp = getTemperature(element);
+      processedForecast[`${city}`][`${i}`].description =
+        getDescriptionForecast(element);
+
+      i++;
+    });
+    return processedForecast;
+    // content.textContent = "";
+  } catch (err) {
+    // content.textContent = "Please type a valid location!";
+    throw new Error("ERROR:" + err);
+  }
+}
 async function fetchWeatherForecast(location = "Madison") {
-  console.log(location);
+  if (location === "") {
+    return;
+  }
   try {
     // content.textContent = "loading ... (please wait)";
     const city = location;
     // const city = location.substring(0, location.indexOf(","));
-    // const promise = await fetch(
-    //   `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=19d6b05066109b1f4f25ae216d98acf3`,
-    //   { mode: "cors" }
-    // );
+
     const promise = await fetch(
       "https://api.openweathermap.org" +
         `/data/2.5/forecast?q=${city}&` +
@@ -25,7 +59,6 @@ async function fetchWeatherForecast(location = "Madison") {
     );
     const newData = await promise.json();
 
-    console.log("newdata", newData);
     const dataArray = newData.list;
     let i = 0;
     processedForecast[`${city}`] = {};
@@ -75,7 +108,6 @@ function getProcessedForecast() {
 async function fetchWeatherCurrent(location = "Madison") {
   try {
     // content.textContent = "loading ... (please wait)";
-    console.log(location);
     if (location && location.coords) {
       const promise = await fetch(
         "https://api.openweathermap.org" +
@@ -85,7 +117,6 @@ async function fetchWeatherCurrent(location = "Madison") {
       );
 
       const newData = await promise.json();
-      console.log(newData);
 
       processedData.city = newData.name;
       processedData.location = await checkLocation(newData);
@@ -187,4 +218,5 @@ export {
   fetchWeatherCurrent,
   getProcessedData,
   getProcessedForecast,
+  fetchHourlyForecast,
 };

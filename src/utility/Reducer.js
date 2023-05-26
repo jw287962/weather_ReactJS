@@ -8,7 +8,14 @@ function reducer(state, action) {
   // loading: true,
   // };
   if (action.type === "add_location") {
-    // handle duplicates!!!
+    if (state.locationsData[action.activeLocation]) {
+      return {
+        ...state,
+        locations: [...state.locations],
+        activeLocation: action.activeLocation,
+        locationsData: { ...action.locationsData },
+      };
+    }
     return {
       ...state,
       locations: [action.activeLocation, ...state.locations],
@@ -26,7 +33,6 @@ function reducer(state, action) {
   }
 
   if (action.type === "loading") {
-    // handle duplicates!!!
     return {
       ...state,
       loading: action.loading,
@@ -34,14 +40,12 @@ function reducer(state, action) {
   }
 
   if (action.type === "selection") {
-    // handle duplicates!!!
     return {
       ...state,
       expandLocation: action.expandLocation,
     };
   }
   if (action.type === "home") {
-    // handle duplicates!!!
     return {
       ...state,
       expandLocation: "",
