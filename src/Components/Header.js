@@ -17,7 +17,7 @@ function Header() {
       <Link to={`/`} onClick={handleHomeClick}>
         WEATHER FORECAST
       </Link>
-      <a href="https://github.com/jw287962/weather">
+      <a href="https://github.com/jw287962/weather_ReactJS">
         <svg
           height="32"
           aria-hidden="true"
