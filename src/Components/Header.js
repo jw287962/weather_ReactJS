@@ -14,7 +14,7 @@ function Header() {
     });
   }
   const [searchTerm, setSearchTerm] = useState("");
-  const [error, setError] = useState("");
+  // const [error, setError] = useState("");
 
   function processNewLocation(e) {
     e.preventDefault();
@@ -24,7 +24,7 @@ function Header() {
         `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
       ] !== undefined
     ) {
-      setError("Duplicate Location");
+      dispatch({ type: "error", error: "Duplicate Location" });
       return;
     }
     dispatch({ type: "loading", loading: true });
@@ -37,10 +37,10 @@ function Header() {
           activeLocation: data.city,
           locationsData: { ...state.locationsData, [data.city]: { ...data } },
         });
-        setError("");
+        dispatch({ type: "error", error: "" });
       })
       .catch((err) => {
-        setError("Try Again: No Location Found");
+        dispatch({ type: "error", error: "Try Again: No Location Found" });
       });
     dispatch({ type: "loading", loading: false });
   }
@@ -67,22 +67,27 @@ function Header() {
           </svg>
         </a>
       </div>
-      <form className="locationform" onSubmit={processNewLocation}>
-        <label htmlFor="location">LOCATION: </label>
-        <input
-          type="search"
-          id="location"
-          name="location"
-          placeholder="Search by City Name"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </form>
 
-      <div className="loading">
-        {error}
-        {state.loading ? "loading...(please wait)" : ""}{" "}
-      </div>
+      {!state.expandLocation && (
+        <>
+          <form className="locationform" onSubmit={processNewLocation}>
+            <label htmlFor="location">LOCATION: </label>
+            <input
+              type="search"
+              id="location"
+              name="location"
+              placeholder="Search by City Name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </form>
+
+          <div className="loading">
+            {state.error ? `${state.error}` : ""}
+            {state.loading ? "loading...(please wait)" : ""}{" "}
+          </div>
+        </>
+      )}
     </div>
   );
 }

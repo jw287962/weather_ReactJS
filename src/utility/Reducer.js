@@ -24,14 +24,20 @@ function reducer(state, action) {
     };
   }
 
-  if (action.type === "refresh") {
-    // handle duplicates!!!
+  // if (action.type === "refresh") {
+  //   // handle duplicates!!!
+  //   return {
+  //     ...state,
+  //     locationsData: { ...action.locationsData },
+  //   };
+  // }
+
+  if (action.type === "error") {
     return {
       ...state,
-      locationsData: { ...action.locationsData },
+      error: action.error,
     };
   }
-
   if (action.type === "loading") {
     return {
       ...state,

@@ -34,6 +34,12 @@ body {
 .header {
   font-weight: 900;
   font-size: 40px;
+  min-height: 160px;
+}
+.loading {
+  min-height: 20px;
+  font-size: 20px;
+  padding: 0px;
 }
 a {
   text-decoration: none;

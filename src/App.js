@@ -61,10 +61,12 @@ function App() {
                 [data.city]: { ...data },
               },
             });
-            setError("");
+            dispatch({ type: "error", error: "" });
+            // setError("");
           })
           .catch((err) => {
-            setError("Try Again: No Location Found");
+            dispatch({ type: "error", error: "Try Again: No Location Found" });
+            // setError("Try Again: No Location Found");
           });
       });
     };
@@ -77,7 +79,7 @@ function App() {
       <Header></Header>
       {!state.expandLocation && (
         <>
-          <button className="refresh"></button>
+          {/* <button className="refresh"></button> */}
           <div className="content"></div>
           {state.locations.map((location, i) => {
             const data = state.locationsData[location];
@@ -88,10 +90,6 @@ function App() {
 
       {state.expandLocation && (
         <>
-          <div className="loading">
-            {error}
-            {state.loading ? "loading...(please wait)" : ""}{" "}
-          </div>
           <button className="refresh"></button>
           <div className="content"></div>
 
