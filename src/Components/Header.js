@@ -80,12 +80,12 @@ function Header() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-          </form>
 
-          <div className="loading">
-            {state.error ? `${state.error}` : ""}
-            {state.loading ? "loading...(please wait)" : ""}{" "}
-          </div>
+            <div className="loading">
+              {state.error ? `${state.error}` : ""}
+              {state.loading ? "loading...(please wait)" : ""}{" "}
+            </div>
+          </form>
         </>
       )}
     </div>

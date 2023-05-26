@@ -34,12 +34,13 @@ body {
 .header {
   font-weight: 900;
   font-size: 40px;
-  min-height: 160px;
 }
 .loading {
   min-height: 20px;
   font-size: 20px;
-  padding: 0px;
+  padding: 10px;
+  padding-bottom: 0px;
+  font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
 }
 a {
   text-decoration: none;
