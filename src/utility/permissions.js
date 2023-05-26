@@ -3,7 +3,6 @@ export function handlePermission(setSearchTerm) {
   navigator.permissions
     .query({ name: "geolocation" })
     .then((result) => {
-      console.log(result);
       if (result.state === "granted") {
         report(result.state);
       }

@@ -55,6 +55,7 @@ a {
 .locationform {
   font-family: RobotoBold, Arial, Helvetica, sans-serif;
   margin: 10px;
+  font-size: 20px;
 }
 #location {
   border-radius: 5px;
@@ -157,6 +158,10 @@ button:active {
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
+  }
+  .header > div,
+  .header > div > a {
+    margin: 5px;
   }
   .content {
     min-width: auto;

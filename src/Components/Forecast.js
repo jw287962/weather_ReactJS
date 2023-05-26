@@ -40,7 +40,7 @@ function Forecast() {
         setData(state.locationsData[state.expandLocation]);
       }
     }
-
+    dispatch({ type: "loading", loading: true });
     checkNoData();
   }, []);
 
@@ -55,6 +55,7 @@ function Forecast() {
     }
 
     fetchForecast();
+    dispatch({ type: "loading", loading: false });
   }, [data]);
 
   return (

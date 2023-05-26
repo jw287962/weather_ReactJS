@@ -22,7 +22,6 @@ function App() {
   //   locationsData: {},
   // };
   // const [state, dispatch] = useReducer(reducer, initialState);
-  const [searchTerm, setSearchTerm] = useState("");
   const [currentLocation, setCurrentLocation] = useState("");
   const [error, setError] = useState("");
 
@@ -38,67 +37,25 @@ function App() {
   useEffect(() => {
     if (currentLocation != "") {
       fetchWeatherCurrent(currentLocation).then((data) => {
-        if (state.locationsData[data.city]) {
-          dispatch({
-            type: "refresh",
-            locationsData: { ...state.locationsData, [data.city]: { ...data } },
-          });
-        } else {
-          dispatch({
-            type: "add_location",
-            activeLocation: data.city,
-            locationsData: { ...state.locationsData, [data.city]: { ...data } },
-          });
-        }
-      });
-      dispatch({ type: "loading", loading: false });
-    }
-  }, [currentLocation]);
-  function checkDuplicate() {
-    return (
-      state.locationsData[
-        `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
-      ] !== undefined
-    );
-  }
-  function processNewLocation(e) {
-    e.preventDefault();
-    console.log();
-    if (
-      state.locationsData[
-        `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
-      ] !== undefined
-    ) {
-      setError("Duplicate Location");
-      return;
-    }
-    dispatch({ type: "loading", loading: true });
-
-    const processedData = fetchWeatherCurrent(searchTerm);
-    processedData
-      .then((data) => {
         dispatch({
           type: "add_location",
           activeLocation: data.city,
           locationsData: { ...state.locationsData, [data.city]: { ...data } },
         });
-        setError("");
-      })
-      .catch((err) => {
-        setError("Try Again: No Location Found");
       });
-    dispatch({ type: "loading", loading: false });
-  }
+      dispatch({ type: "loading", loading: false });
+    }
+  }, [currentLocation]);
 
   useEffect(() => {
     const looperArray = () => {
-      console.log(state);
       state.locations.forEach((city) => {
+        console.log("refresh", city);
         fetchWeatherCurrent(city)
           .then((data) => {
-            console.log("refresh", city);
             dispatch({
-              type: "refresh",
+              type: "add_location",
+              activeLocation: data.city,
               locationsData: {
                 ...state.locationsData,
                 [data.city]: { ...data },
@@ -114,33 +71,21 @@ function App() {
     const inter = setTimeout(looperArray, 10000);
     return () => clearInterval(inter);
   }, [state]);
+
   return (
     <div className="App">
       <Header></Header>
       {!state.expandLocation && (
         <>
-          <form className="locationform" onSubmit={processNewLocation}>
-            <label htmlFor="location">LOCATION:</label>
-            <input
-              type="search"
-              id="location"
-              name="location"
-              placeholder="Search by City Name"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </form>
-
-          <div className="loading">
-            {error}
-            {state.loading ? "loading...(please wait)" : ""}{" "}
-          </div>
           <button className="refresh"></button>
           <div className="content"></div>
-
-          <WeatherBox state={state} dispatch={dispatch}></WeatherBox>
+          {state.locations.map((location, i) => {
+            const data = state.locationsData[location];
+            return <WeatherBox data={data}></WeatherBox>;
+          })}
         </>
       )}
+
       {state.expandLocation && (
         <>
           <div className="loading">
@@ -150,11 +95,7 @@ function App() {
           <button className="refresh"></button>
           <div className="content"></div>
 
-          <WeatherBox
-            state={state}
-            dispatch={dispatch}
-            expandLocation={state.expandLocation}
-          ></WeatherBox>
+          <WeatherBox></WeatherBox>
         </>
       )}
     </div>
