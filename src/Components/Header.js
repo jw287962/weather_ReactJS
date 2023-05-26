@@ -21,7 +21,9 @@ function Header() {
     console.log();
     if (
       state.locationsData[
-        `${searchTerm[0].toUpperCase().concat(searchTerm.substring(1))}`
+        `${searchTerm[0]
+          .toUpperCase()
+          .concat(searchTerm.substring(1).toLowerCase())}`
       ] !== undefined
     ) {
       dispatch({ type: "error", error: "Duplicate Location" });
