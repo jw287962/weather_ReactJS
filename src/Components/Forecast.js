@@ -34,6 +34,7 @@ function Forecast() {
               [data.city]: { ...data },
             },
           });
+          dispatch({ type: "selection", expandLocation: data.city });
           setData(data);
         }
       } else {

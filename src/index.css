@@ -33,6 +33,7 @@ body {
 
 .header {
   font-weight: 900;
+  margin-top: 8px;
   font-size: 40px;
 }
 .loading {
