@@ -91,7 +91,15 @@ function Header() {
         </div>
       )}
 
-      <span className="timer">Last Refresh: {state.timer}</span>
+      <div className="miscData">
+        {state.expandLocation && (
+          <span className="miniloading">
+            {state.error ? `${state.error}` : ""}
+            {state.loading ? "loading...(please wait)" : ""}{" "}
+          </span>
+        )}
+        <span className="timer">Last Refresh: {state.timer}</span>
+      </div>
     </div>
   );
 }

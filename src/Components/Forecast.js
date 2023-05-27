@@ -35,7 +35,7 @@ function Forecast() {
   async function checkNoData() {
     if (state && state.expandLocation === "") {
       const data = await fetchWeatherCurrent(id);
-      if (!state.locationsData[data.city]) {
+      if (data === undefined) {
         dispatch({
           type: "add_location",
           activeLocation: data.city,
@@ -44,7 +44,6 @@ function Forecast() {
             [data.city]: { ...data },
           },
         });
-        dispatch({ type: "selection", expandLocation: data.city });
         setData(data);
       }
     } else {
@@ -67,13 +66,14 @@ function Forecast() {
 
   useEffect(() => {
     dispatch({ type: "loading", loading: true });
+    dispatch({ type: "selection", expandLocation: id });
     checkNoData();
-    fetchForecast();
   }, []);
 
-  // useEffect(() => {}, [data]);
   useEffect(() => {
-    console.log(state.timer);
+    fetchForecast();
+  }, [data]);
+  useEffect(() => {
     if (state.timer >= state.refreshTime) {
       setTimeout(fetchAllData, 700);
     }

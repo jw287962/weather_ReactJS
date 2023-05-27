@@ -53,6 +53,15 @@ body {
   padding-bottom: 0px;
   font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
 }
+.miscData {
+  display: flex;
+}
+.miniloading {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  font-size: 16px;
+}
 a {
   text-decoration: none;
   color: black;

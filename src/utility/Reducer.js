@@ -15,7 +15,6 @@ function reducer(state, action) {
   }
 
   if (action.type === "add_location") {
-    console.log("update/add location");
     if (state.locationsData[action.activeLocation]) {
       return {
         ...state,
