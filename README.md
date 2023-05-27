@@ -1,3 +1,25 @@
+# NOTES
+
+## HOW TO USE:
+
+1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOURCURRENT LOCATIONS WEATHER DATA)
+2.  CLICK THE WEATHER CARD TO GET INDEPTH DETAILS
+
+## VIA OpenweatherAPI
+
+Current:
+
+- To create working prototype, did the basic api call that accepts CITIES. (The current CITY lookup APi seems to sometimes call the larger nearby city data instead)
+- Has timer since last refresh, should update every 40 seconds....
+- INDEPTH DETAILS ONLY SHOW 5 DAYS AND BASIC DATA... WILL UPDATE AND SHOW MORE RELEVANT AND INTERESTING DATA.
+
+## Future/Improvements to be done:
+
+- Improve API call to allow more specific searches, and to show search results while searching.
+- allow caching or some storage of data on computer with the locations the user wants (can delete or add), and will populate with API data upon website load.
+
+--- maybe the user can change update timer based on preferences.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

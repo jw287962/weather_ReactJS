@@ -132,6 +132,8 @@ async function fetchWeatherCurrent(location = "Madison") {
       // promiseEvalUpdateHTML(newData.name);
     } else {
       location = location.trim();
+      console.log(location, "location");
+
       const promise = await fetch(
         "https://api.openweathermap.org" +
           `/data/2.5/weather?q=${location}&` +
