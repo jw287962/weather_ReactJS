@@ -184,7 +184,6 @@ button:active {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
   }
   .header > div,
   .header > div > a {

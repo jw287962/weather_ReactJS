@@ -35,17 +35,18 @@ function Forecast() {
   async function checkNoData() {
     if (state && state.expandLocation === "") {
       const data = await fetchWeatherCurrent(id);
-      if (data === undefined) {
-        dispatch({
-          type: "add_location",
-          activeLocation: data.city,
-          locationsData: {
-            ...state.locationsData,
-            [data.city]: { ...data },
-          },
-        });
-        setData(data);
-      }
+      console.log(state);
+      console.log(data);
+
+      dispatch({
+        type: "add_location",
+        activeLocation: data.city,
+        locationsData: {
+          ...state.locationsData,
+          [data.city]: { ...data },
+        },
+      });
+      setData(data);
     } else {
       setData(state.locationsData[state.expandLocation]);
     }
@@ -68,11 +69,10 @@ function Forecast() {
     dispatch({ type: "loading", loading: true });
     dispatch({ type: "selection", expandLocation: id });
     checkNoData();
+    fetchForecast();
   }, []);
 
-  useEffect(() => {
-    fetchForecast();
-  }, [data]);
+  useEffect(() => {}, [data]);
   useEffect(() => {
     if (state.timer >= state.refreshTime) {
       setTimeout(fetchAllData, 700);

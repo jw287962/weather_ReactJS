@@ -30,7 +30,7 @@ function App() {
       dispatch({ type: "loading", loading: true });
       await handlePermission(setCurrentLocation);
     };
-
+    dispatch({ type: "selection", expandLocation: "" });
     fetchData();
   }, []);
 
@@ -91,6 +91,7 @@ function App() {
     };
   }, [state]);
 
+  console.log(state);
   return (
     <div className="App">
       <Header></Header>
