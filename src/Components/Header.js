@@ -90,6 +90,7 @@ function Header() {
           </form>
         </div>
       )}
+
       <span className="timer">Last Refresh: {state.timer}</span>
     </div>
   );

@@ -21,43 +21,76 @@ function Forecast() {
   const { id } = useParams();
   const [data, setData] = useState();
 
-  useEffect(() => {
-    async function checkNoData() {
-      if (state && state.expandLocation === "") {
-        const data = await fetchWeatherCurrent(id);
-        if (!state.locationsData[data.city]) {
-          dispatch({
-            type: "add_location",
-            activeLocation: data.city,
-            locationsData: {
-              ...state.locationsData,
-              [data.city]: { ...data },
-            },
-          });
-          dispatch({ type: "selection", expandLocation: data.city });
-          setData(data);
-        }
-      } else {
-        setData(state.locationsData[state.expandLocation]);
+  async function updateData() {
+    const data = await fetchWeatherCurrent(id);
+    dispatch({
+      type: "add_location",
+      activeLocation: data.city,
+      locationsData: {
+        ...state.locationsData,
+        [data.city]: { ...data },
+      },
+    });
+  }
+  async function checkNoData() {
+    if (state && state.expandLocation === "") {
+      const data = await fetchWeatherCurrent(id);
+      if (!state.locationsData[data.city]) {
+        dispatch({
+          type: "add_location",
+          activeLocation: data.city,
+          locationsData: {
+            ...state.locationsData,
+            [data.city]: { ...data },
+          },
+        });
+        dispatch({ type: "selection", expandLocation: data.city });
+        setData(data);
       }
+    } else {
+      setData(state.locationsData[state.expandLocation]);
     }
+  }
+  async function fetchForecast() {
+    const result = await fetchWeatherForecast(state.expandLocation || id);
+    setForecast(Object.values(result[`${state.expandLocation || id}`]));
+
+    const hourlyData = await fetchHourlyForecast(state.expandLocation);
+    console.log("hourly", hourlyData);
+    setHourlyForecast(hourlyData);
+    dispatch({ type: "loading", loading: false });
+  }
+  function fetchAllData() {
+    updateData();
+    fetchForecast();
+  }
+
+  useEffect(() => {
     dispatch({ type: "loading", loading: true });
     checkNoData();
+    fetchForecast();
   }, []);
 
+  // useEffect(() => {}, [data]);
   useEffect(() => {
-    async function fetchForecast() {
-      const result = await fetchWeatherForecast(state.expandLocation || id);
-      setForecast(Object.values(result[`${state.expandLocation || id}`]));
-
-      const hourlyData = await fetchHourlyForecast(state.expandLocation);
-      console.log("hourly", hourlyData);
-      setHourlyForecast(hourlyData);
+    console.log(state.timer);
+    if (state.timer >= state.refreshTime) {
+      setTimeout(fetchAllData, 700);
     }
+  }, [state.timer]);
 
-    fetchForecast();
-    dispatch({ type: "loading", loading: false });
-  }, [data]);
+  useEffect(() => {
+    const timer = setTimeout(
+      () =>
+        dispatch({
+          type: "timer",
+        }),
+      1000
+    );
+    return () => {
+      clearInterval(timer);
+    };
+  }, [state]);
 
   return (
     <div>

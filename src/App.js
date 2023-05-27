@@ -71,7 +71,7 @@ function App() {
           });
       });
     };
-    if (state.timer === 10) {
+    if (state.timer >= state.refreshTime) {
       setTimeout(looperArray, 700);
     }
 
