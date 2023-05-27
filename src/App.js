@@ -49,8 +49,9 @@ function App() {
 
   useEffect(() => {
     const looperArray = () => {
+      console.log("test");
       state.locations.forEach((city) => {
-        console.log("refresh", city);
+        console.log("REFRESH", city);
         fetchWeatherCurrent(city)
           .then((data) => {
             dispatch({
@@ -70,8 +71,24 @@ function App() {
           });
       });
     };
-    const inter = setTimeout(looperArray, 10000);
-    return () => clearInterval(inter);
+    if (state.timer === 10) {
+      setTimeout(looperArray, 700);
+    }
+
+    return () => {};
+  }, [state.timer]);
+
+  useEffect(() => {
+    const timer = setTimeout(
+      () =>
+        dispatch({
+          type: "timer",
+        }),
+      1000
+    );
+    return () => {
+      clearInterval(timer);
+    };
   }, [state]);
 
   return (

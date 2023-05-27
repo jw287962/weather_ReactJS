@@ -36,6 +36,16 @@ body {
   margin-top: 8px;
   font-size: 40px;
 }
+.secondaryHeaderTools {
+  font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
+  font-size: 18px;
+}
+.timer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  font-size: 16px;
+}
 .loading {
   min-height: 20px;
   font-size: 20px;

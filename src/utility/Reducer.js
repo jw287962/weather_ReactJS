@@ -7,13 +7,22 @@ function reducer(state, action) {
   // expandLocation: "",
   // loading: true,
   // };
+  if (action.type === "timer") {
+    return {
+      ...state,
+      timer: (state.timer | 0) + 1,
+    };
+  }
+
   if (action.type === "add_location") {
+    console.log("update/add location");
     if (state.locationsData[action.activeLocation]) {
       return {
         ...state,
         locations: [...state.locations],
         activeLocation: action.activeLocation,
         locationsData: { ...action.locationsData },
+        timer: 0,
       };
     }
     return {
@@ -21,6 +30,7 @@ function reducer(state, action) {
       locations: [action.activeLocation, ...state.locations],
       activeLocation: action.activeLocation,
       locationsData: { ...action.locationsData },
+      timer: 0,
     };
   }
 

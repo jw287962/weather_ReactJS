@@ -71,7 +71,7 @@ function Header() {
       </div>
 
       {!state.expandLocation && (
-        <>
+        <div className="secondaryHeaderTools">
           <form className="locationform" onSubmit={processNewLocation}>
             <label htmlFor="location">LOCATION: </label>
             <input
@@ -88,8 +88,9 @@ function Header() {
               {state.loading ? "loading...(please wait)" : ""}{" "}
             </div>
           </form>
-        </>
+        </div>
       )}
+      <span className="timer">Last Refresh: {state.timer}</span>
     </div>
   );
 }

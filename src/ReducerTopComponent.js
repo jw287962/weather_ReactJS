@@ -17,6 +17,7 @@ function Reducer() {
     expandLocation: "",
     locationsData: {},
     error: "",
+    timer: 0,
   };
   const router = createBrowserRouter([
     {
