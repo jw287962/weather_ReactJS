@@ -14,7 +14,7 @@ function WeatherBoxData({ data }) {
         </span>
         <div className="dailyrange">
           <span className="tempdegree">
-            {convertKtoF(data.main.temp_min)}°F -
+            {convertKtoF(data.main.temp_min)}°F -{" "}
           </span>
           <span className="tempdegree">
             {convertKtoF(data.main.temp_max)}°F

@@ -12,7 +12,6 @@ function groupBy(array) {
   let previousString = "";
   let i = 0;
   array.forEach((ele) => {
-    console.log(ele);
     const comparison = ele.dt_txt.substring(0, 10);
     if (previousString === "") {
       newArray[i].push(ele);
