@@ -26,6 +26,8 @@ function Forecast() {
   const [forecast, setForecast] = useState({});
   const [hourlyForecast, setHourlyForecast] = useState();
 
+  const [toggleDate, setToggleDate] = useState(0);
+
   const { id } = useParams();
   const [data, setData] = useState();
 
@@ -150,42 +152,44 @@ function Forecast() {
             <div
               className="hourlyforecast"
               data-date={date[0].dt_txt.substring(0, 10)}
+              onClick={() => setToggleDate(i)}
             >
               <div className="date">
                 {i === 0 ? "Today" : date[0].dt_txt.substring(0, 10)}
               </div>
-              {date.map((timedata) => (
-                <>
-                  {/* {groupByDate(timedata.dt_txt.substring(5, 13)) && (
+              {toggleDate === i &&
+                date.map((timedata) => (
+                  <>
+                    {/* {groupByDate(timedata.dt_txt.substring(5, 13)) && (
                     <div className="date">
                       {groupByDate(timedata.dt_txt.substring(5, 13))}
                     </div>
                   )} */}
-                  <div
-                    className={`hourlyforecastmini ${timedata.dt_txt.substring(
-                      5,
-                      10
-                    )}`}
-                  >
-                    <div>
+                    <div
+                      className={`hourlyforecastmini ${timedata.dt_txt.substring(
+                        5,
+                        10
+                      )}`}
+                    >
                       <div>
-                        {processAMPM(timedata.dt_txt.substring(11, 13))}
+                        <div>
+                          {processAMPM(timedata.dt_txt.substring(11, 13))}
+                        </div>
+                        <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
+                        <div>
+                          <span className="min">
+                            {kelvinToF(timedata.main.temp_min) + "°F"}
+                          </span>
+                          {" - "}
+                          <span className="max">
+                            {kelvinToF(timedata.main.temp_max) + "°F"}
+                          </span>
+                        </div>
+                        {/* <div> Wind: {timedata.wind.speed} m/s</div> */}
                       </div>
-                      <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
-                      <div>
-                        <span className="min">
-                          {kelvinToF(timedata.main.temp_min) + "°F"}
-                        </span>
-                        {" - "}
-                        <span className="max">
-                          {kelvinToF(timedata.main.temp_max) + "°F"}
-                        </span>
-                      </div>
-                      {/* <div> Wind: {timedata.wind.speed} m/s</div> */}
                     </div>
-                  </div>
-                </>
-              ))}
+                  </>
+                ))}
             </div>
           ))}
         </div>
