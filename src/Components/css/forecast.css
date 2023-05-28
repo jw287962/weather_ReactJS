@@ -6,8 +6,37 @@
 
 .hourlyforecast {
   font-size: 20px;
+  font-family: Roboto;
 }
 
 .bold {
   font-weight: 800;
+}
+
+.hourlyforecast > .date {
+  width: 100%;
+  background-color: lightblue;
+}
+
+.min {
+  color: rgb(112, 112, 112);
+  font-weight: 600;
+}
+
+.max {
+  color: black;
+  font-weight: 800;
+}
+
+.tiny {
+  font-size: small;
+  vertical-align: top;
+}
+
+.hourlyforecastmini > div {
+  display: grid;
+  /* grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+   */
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: center;
 }

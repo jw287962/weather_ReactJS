@@ -114,6 +114,7 @@ a {
   /* background-clip: padding-box; */
   border-radius: 50%;
 }
+
 button:active {
   top: 2px;
 }
@@ -122,6 +123,10 @@ button:active {
   font-weight: 900;
   font-size: 25px;
   color: black;
+}
+
+.temp > .dailyrange > .tempdegree {
+  font-size: 20px;
 }
 .tempsymbol {
   vertical-align: top;

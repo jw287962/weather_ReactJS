@@ -1,5 +1,6 @@
 import Header from "./Header";
 import ForcastGraph from "./ForecastGraph";
+import WeatherBoxData from "./WeatherBoxData";
 
 import { useEffect, useState } from "react";
 import { MyDispatch, MyState } from "../ReducerTopComponent";
@@ -9,6 +10,7 @@ import {
   fetchWeatherCurrent,
   fetchWeatherForecast,
   fetchHourlyForecast,
+  convertKtoF,
 } from "../utility/weather";
 
 import { useContext } from "react";
@@ -123,22 +125,7 @@ function Forecast() {
 
       {data && (
         <div className="weatherdetails">
-          <div className="location">
-            {data.city}, {data.location[0].state}
-          </div>
-          <div className="temp">
-            <img src={images[imageNum(data.description)]}></img>
-            <span className="tempdegree">{data.temp}</span>
-            <span className="tempsymbol">°F</span>
-          </div>
-          <div className="description">{data.description}</div>
-          <div className="humidity">Humidity: {data.humidity}</div>
-          <div className="forecastbuttons"></div>
-          <div className="sundetails">
-            <div>{data.country}</div>
-            <div className="sunset">Sunset: {data.sunset}</div>
-            <div className="sunrise">Sunrise: {data.sunrise}</div>
-          </div>
+          <WeatherBoxData data={data}></WeatherBoxData>
         </div>
       )}
       <div className="forecast">
@@ -160,27 +147,39 @@ function Forecast() {
 
       {hourlyForecast && (
         <div className="hourlyforecast">
-          <div>
-            <div className="date">Today:</div>
-          </div>
+          <div className="date">Today:</div>
           {hourlyForecast.map((timedata) => (
-            <div className="hourlyforecastmini">
-              {
+            <>
+              {groupByDate(timedata.dt_txt.substring(5, 13)) && (
                 <div className="date">
                   {groupByDate(timedata.dt_txt.substring(5, 13))}
                 </div>
-              }
-
-              <div className="flexrow btw">
-                <div>{processAMPM(timedata.dt_txt.substring(11, 13))} </div>
-                <div>Feels Like: {kelvinToF(timedata.main.feels_like)}</div>
+              )}
+              <div
+                className={`hourlyforecastmini ${timedata.dt_txt.substring(
+                  5,
+                  10
+                )}`}
+              >
                 <div>
-                  <strong>Min:</strong> {kelvinToF(timedata.main.temp_min)}{" "}
-                  <strong>Max:</strong> {kelvinToF(timedata.main.temp_max)}
+                  <div>{processAMPM(timedata.dt_txt.substring(11, 13))}</div>
+                  <div>
+                    RealFeel<span className="tiny"> ®</span>:{" "}
+                    {kelvinToF(timedata.main.feels_like)}°F
+                  </div>
+                  <div>
+                    <span className="min">
+                      {kelvinToF(timedata.main.temp_min) + "°F"}
+                    </span>
+                    {" - "}
+                    <span className="max">
+                      {kelvinToF(timedata.main.temp_max) + "°F"}
+                    </span>
+                  </div>
+                  <div> Wind: {timedata.wind.speed} m/s</div>
                 </div>
-                <div> Wind: {timedata.wind.speed} m/s</div>
               </div>
-            </div>
+            </>
           ))}
         </div>
       )}

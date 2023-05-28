@@ -23,20 +23,7 @@ async function fetchHourlyForecast(location = "") {
     const dataArray = newData.list;
     console.log(dataArray, "dataarray");
     let i = 0;
-    // processedForecast[`${city}`] = {};
 
-    // dataArray.forEach((element) => {
-    //   processedForecast[`${city}`][i] = { date: 0 };
-
-    //   processedForecast[`${city}`][`${i}`].date = getDate(element, i);
-
-    //   processedForecast[`${city}`][`${i}`].temp = getTemperature(element);
-    //   processedForecast[`${city}`][`${i}`].description =
-    //     getDescriptionForecast(element);
-
-    //   i++;
-    // });
-    // return processedForecast;
     return dataArray;
     // content.textContent = "";
   } catch (err) {
@@ -120,16 +107,18 @@ async function fetchWeatherCurrent(location = "Madison") {
 
       const newData = await promise.json();
 
-      processedData.city = newData.name;
-      processedData.location = await checkLocation(newData);
-      processedData.humidity = getHumidity(newData);
-      processedData.sunset = getSunset(newData);
-      processedData.sunrise = getSunrise(newData);
-      processedData.temp = tempToFarenheit(newData);
-      processedData.country = getCountry(newData);
-      processedData.description = getDescription(newData);
+      // newData.city = newData.name;
+      // newData.humidity = getHumidity(newData);
+      newData.sys.sunset = getSunset(newData);
+      newData.sys.sunrise = getSunrise(newData);
+      // newData.temp = tempToFarenheit(newData);
+      // newData.country = getCountry(newData);
+      newData.description = getDescription(newData);
+      newData.location = await checkLocation(newData);
 
+      console.log(newData);
       // content.textContent = "";
+      return newData;
 
       // promiseEvalUpdateHTML(newData.name);
     } else {
@@ -144,14 +133,15 @@ async function fetchWeatherCurrent(location = "Madison") {
       );
 
       const newData = await promise.json();
-      processedData.city = newData.name;
-      processedData.location = await checkLocation(newData);
-      processedData.humidity = getHumidity(newData);
-      processedData.sunset = getSunset(newData);
-      processedData.sunrise = getSunrise(newData);
-      processedData.temp = tempToFarenheit(newData);
-      processedData.country = getCountry(newData);
-      processedData.description = getDescription(newData);
+      // processedData.city = newData.name;
+      newData.location = await checkLocation(newData);
+      // processedData.humidity = getHumidity(newData);
+      newData.sys.sunset = getSunset(newData);
+      newData.sys.sunrise = getSunrise(newData);
+      // processedData.temp = tempToFarenheit(newData);
+      // processedData.country = getCountry(newData);
+      newData.description = getDescription(newData);
+      return newData;
     }
   } catch (err) {
     throw new Error("ERROR:" + err);
@@ -173,14 +163,14 @@ function capitalizeFirstLetter(input) {
   return description;
 }
 
-function getCountry(data) {
-  return data.sys.country;
-}
-function tempToFarenheit(data) {
-  const currentTemp = data.main.temp;
-  const newTemp = (1.8 * (currentTemp - 273) + 32).toFixed(0);
-  return newTemp;
-}
+// function getCountry(data) {
+//   return data.sys.country;
+// }
+// function tempToFarenheit(data) {
+//   const currentTemp = data.main.temp;
+//   const newTemp = (1.8 * (currentTemp - 273) + 32).toFixed(0);
+//   return newTemp;
+// }
 async function checkLocation(data) {
   const lat = data.coord.lat;
   const lon = data.coord.lon;
@@ -194,10 +184,10 @@ async function checkLocation(data) {
   return locationData;
 }
 
-function getHumidity(data) {
-  const currentHumidity = data.main.humidity;
-  return currentHumidity + "%";
-}
+// function getHumidity(data) {
+//   const currentHumidity = data.main.humidity;
+//   return currentHumidity + "%";
+// }
 
 function getSunset(data) {
   const timeOfSunset = fromUnixTime(data.sys.sunset);
@@ -214,13 +204,17 @@ function getSunrise(data) {
 function formatTime(data) {
   return format(new Date(data), "pp");
 }
-function getProcessedData() {
-  return processedData;
+// function getProcessedData() {
+//   return processedData;
+// }
+
+function convertKtoF(num) {
+  return Math.round(((num - 273.15) * 9) / 5 + 32);
 }
 export {
   fetchWeatherForecast,
   fetchWeatherCurrent,
-  getProcessedData,
   getProcessedForecast,
   fetchHourlyForecast,
+  convertKtoF,
 };

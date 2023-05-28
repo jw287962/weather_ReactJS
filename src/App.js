@@ -51,6 +51,7 @@ function App() {
 
   useEffect(() => {
     const looperArray = () => {
+      console.log(state);
       state.locations.forEach((city) => {
         console.log("REFRESH", city);
         fetchWeatherCurrent(city)
