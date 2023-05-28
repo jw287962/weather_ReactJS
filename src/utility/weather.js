@@ -6,6 +6,26 @@ import { reducer } from "./Reducer.js";
 let processedData = {};
 // const content = document.querySelector(".loading");
 let processedForecast = {};
+
+function groupBy(array) {
+  const newArray = [[]];
+  let previousString = "";
+  let i = 0;
+  array.forEach((ele) => {
+    console.log(ele);
+    const comparison = ele.dt_txt.substring(0, 10);
+    if (previousString === "") {
+      newArray[i].push(ele);
+    } else if (comparison === previousString) {
+      newArray[i].push(ele);
+    } else if (comparison !== previousString) {
+      i++;
+      newArray.push([]);
+    }
+    previousString = comparison;
+  });
+  return newArray;
+}
 async function fetchHourlyForecast(location = "") {
   if (location === "") {
     return;
@@ -20,11 +40,12 @@ async function fetchHourlyForecast(location = "") {
     const newData = await promise.json();
 
     console.log("hourlyforecastfetch", newData);
-    const dataArray = newData.list;
-    console.log(dataArray, "dataarray");
-    let i = 0;
+    const holder = newData.list;
+    const result = groupBy(holder);
 
-    return dataArray;
+    console.log(result, "result");
+
+    return result;
     // content.textContent = "";
   } catch (err) {
     // content.textContent = "Please type a valid location!";
