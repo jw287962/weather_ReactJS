@@ -12,8 +12,12 @@ function groupBy(array) {
   let previousString = "";
   let i = 0;
   array.forEach((ele) => {
-    ele.dt_txt = updateTimeZone(ele.dt);
-    const comparison = ele.dt_txt.substring(0, 10);
+    const array = updateTimeZone(ele.dt);
+    ele.dt_txt = {
+      date: array[0] + "," + array[1],
+      time: array[2].substring(1),
+    };
+    const comparison = ele.dt_txt.date;
 
     if (previousString === "") {
       newArray[i].push(ele);
@@ -29,9 +33,9 @@ function groupBy(array) {
   return newArray;
 }
 function updateTimeZone(origTime) {
-  console.log(origTime);
   const newTime = origTime;
-  return formatMSTime(newTime, "Pp");
+  const formatted = formatMSTime(newTime, "PPp");
+  return formatted.split(",");
 }
 async function fetchHourlyForecast(location = "") {
   if (location === "") {
@@ -46,12 +50,9 @@ async function fetchHourlyForecast(location = "") {
 
     const newData = await promise.json();
 
-    console.log("hourlyforecastfetch", newData);
     // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
     const result = groupBy(holder);
-
-    console.log(result, "result");
 
     return result;
     // content.textContent = "";

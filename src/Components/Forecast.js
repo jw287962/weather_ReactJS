@@ -10,7 +10,6 @@ import {
   fetchWeatherCurrent,
   fetchWeatherForecast,
   fetchHourlyForecast,
-  convertKtoF,
 } from "../utility/weather";
 
 import { useContext } from "react";
@@ -64,7 +63,6 @@ function Forecast() {
   async function fetchForecast() {
     const result = await fetchWeatherForecast(state.expandLocation || id);
     setForecast(Object.values(result[`${state.expandLocation || id}`]));
-    console.log(state.expandLocation);
     const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
     setHourlyForecast(hourlyData);
     dispatch({ type: "loading", loading: false });
@@ -151,28 +149,21 @@ function Forecast() {
           {hourlyForecast.map((date, i) => (
             <div
               className="hourlyforecast"
-              data-date={date[0].dt_txt.substring(0, 10)}
+              data-date={date[0].dt_txt.date}
               onClick={() => setToggleDate(i)}
             >
               <div className="date">
-                {i === 0 ? "Today" : date[0].dt_txt.substring(0, 10)}
+                {i === 0 ? "Today" : date[0].dt_txt.date}
               </div>
               {toggleDate === i &&
                 date.map((timedata) => (
                   <>
-                    {/* {groupByDate(timedata.dt_txt.substring(5, 13)) && (
-                    <div className="date">
-                      {groupByDate(timedata.dt_txt.substring(5, 13))}
-                    </div>
-                  )} */}
+                    
                     <div
-                      className={`hourlyforecastmini ${timedata.dt_txt.substring(
-                        5,
-                        10
-                      )}`}
+                      className={`hourlyforecastmini ${timedata.dt_txt.date}`}
                     >
                       <div>
-                        <div>{timedata.dt_txt.substring(11)}</div>
+                        <div>{timedata.dt_txt.time}</div>
                         <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
                         <div>
                           <span className="min">
@@ -196,16 +187,4 @@ function Forecast() {
   );
 }
 
-function groupByDate(string) {
-  if (string.substring(string.length - 2) === "00") {
-    return string.substring(0, string.length - 2);
-  } else {
-  }
-}
-
 export default Forecast;
-
-{
-  /*
-   */
-}
