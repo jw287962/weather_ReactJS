@@ -162,10 +162,7 @@ function Forecast() {
               >
                 <div>
                   <div>{processAMPM(timedata.dt_txt.substring(11, 13))}</div>
-                  <div>
-                    RealFeel<span className="tiny"> ®</span>:{" "}
-                    {kelvinToF(timedata.main.feels_like)}°F
-                  </div>
+                  <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
                   <div>
                     <span className="min">
                       {kelvinToF(timedata.main.temp_min) + "°F"}
@@ -175,7 +172,7 @@ function Forecast() {
                       {kelvinToF(timedata.main.temp_max) + "°F"}
                     </span>
                   </div>
-                  <div> Wind: {timedata.wind.speed} m/s</div>
+                  {/* <div> Wind: {timedata.wind.speed} m/s</div> */}
                 </div>
               </div>
             </>

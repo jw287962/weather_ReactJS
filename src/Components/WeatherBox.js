@@ -24,7 +24,6 @@ function WeatherBox({ data }) {
     const data = state.locationsData[state.expandLocation];
     return <Forecast state={state} dispatch={dispatch}></Forecast>;
   }
-  console.log(data);
   return (
     <>
       {data && (
@@ -36,7 +35,6 @@ function WeatherBox({ data }) {
           key-location={`${data.name}${0}`}
           data-location={data.city}
         >
-          
           <WeatherBoxData data={data}></WeatherBoxData>
         </Link>
       )}

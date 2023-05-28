@@ -27,7 +27,8 @@ function WeatherBoxData({ data }) {
 
       <div className="forecastbuttons"></div>
       <div className="sundetails">
-        <div>{data.country}</div>
+        <div>{data.sys.country}</div>
+        <div>Wind: {data.wind.speed} m/s</div>
         <div className="sunset">Sunset: {data.sys.sunset}</div>
         <div className="sunrise">Sunrise: {data.sys.sunrise}</div>
       </div>

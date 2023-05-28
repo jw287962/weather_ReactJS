@@ -202,7 +202,7 @@ function getSunrise(data) {
 }
 
 function formatTime(data) {
-  return format(new Date(data), "pp");
+  return format(new Date(data), "p");
 }
 // function getProcessedData() {
 //   return processedData;
