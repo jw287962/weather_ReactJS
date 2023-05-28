@@ -142,7 +142,6 @@ function Forecast() {
           })}
       </div>
       <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
-
       {hourlyForecast && (
         <div>
           {hourlyForecast.map((date, i) => (

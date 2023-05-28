@@ -60,15 +60,17 @@ function ForcastGraph({ hourlyForecast }) {
         </text>
       </g>
       <g className="labels y-labels">
+        {(counter = 0)}
+
         {hourlyForecast &&
           hourlyForecast.map((ele) => (
             <>
-              {ele.map((data, i) => {
-                if (i >= 14) return null;
+              {ele.map((data, counter) => {
+                if (counter >= 7) return null;
                 return (
                   <>
-                    <text x="50" y={graphHeight - i * (graphHeight / 14)}>
-                      {i * 10}
+                    <text x="70" y={graphHeight - counter * (graphHeight / 7)}>
+                      {counter * 10}
                     </text>
                   </>
                 );
