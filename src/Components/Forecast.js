@@ -62,9 +62,8 @@ function Forecast() {
   async function fetchForecast() {
     const result = await fetchWeatherForecast(state.expandLocation || id);
     setForecast(Object.values(result[`${state.expandLocation || id}`]));
-
-    const hourlyData = await fetchHourlyForecast(state.expandLocation);
-    console.log("hourly", hourlyData);
+    console.log(state.expandLocation);
+    const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
     setHourlyForecast(hourlyData);
     dispatch({ type: "loading", loading: false });
   }

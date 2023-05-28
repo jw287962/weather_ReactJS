@@ -101,7 +101,7 @@ a {
   min-width: 400px;
   max-height: 115px;
   font-family: RobotoRegular, Arial, Helvetica, sans-serif;
-  color: rgb(116, 116, 116);
+  color: rgb(85, 85, 85);
   font-size: 17px;
 }
 .temp {
@@ -123,6 +123,9 @@ button:active {
   font-weight: 900;
   font-size: 25px;
   color: black;
+}
+.tempdegree {
+  font-size: 35px;
 }
 
 .temp > .dailyrange > .tempdegree {
