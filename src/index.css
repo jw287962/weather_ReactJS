@@ -48,6 +48,7 @@ body {
 }
 .miscData {
   display: flex;
+  max-height: 20px;
 }
 .miniloading {
   display: flex;
