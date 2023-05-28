@@ -12,7 +12,9 @@ function groupBy(array) {
   let previousString = "";
   let i = 0;
   array.forEach((ele) => {
+    ele.dt_txt = updateTimeZone(ele.dt);
     const comparison = ele.dt_txt.substring(0, 10);
+
     if (previousString === "") {
       newArray[i].push(ele);
     } else if (comparison === previousString) {
@@ -21,9 +23,15 @@ function groupBy(array) {
       i++;
       newArray.push([]);
     }
+
     previousString = comparison;
   });
   return newArray;
+}
+function updateTimeZone(origTime) {
+  console.log(origTime);
+  const newTime = origTime;
+  return formatMSTime(newTime, "Pp");
 }
 async function fetchHourlyForecast(location = "") {
   if (location === "") {
@@ -39,6 +47,7 @@ async function fetchHourlyForecast(location = "") {
     const newData = await promise.json();
 
     console.log("hourlyforecastfetch", newData);
+    // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
     const result = groupBy(holder);
 
@@ -221,8 +230,11 @@ function getSunrise(data) {
   return formattedTime;
 }
 
-function formatTime(data) {
-  return format(new Date(data), "p");
+function formatTime(data, p = "p") {
+  return format(new Date(data), p);
+}
+function formatMSTime(data, formatter = "p") {
+  return format(fromUnixTime(data), formatter);
 }
 // function getProcessedData() {
 //   return processedData;

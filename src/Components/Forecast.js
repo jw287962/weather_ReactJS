@@ -172,9 +172,7 @@ function Forecast() {
                       )}`}
                     >
                       <div>
-                        <div>
-                          {processAMPM(timedata.dt_txt.substring(11, 13))}
-                        </div>
+                        <div>{timedata.dt_txt.substring(11)}</div>
                         <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
                         <div>
                           <span className="min">
