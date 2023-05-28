@@ -1,0 +1,13 @@
+.hourlyforecast > .date,
+.hourlyforecast > div > .date {
+  text-align: center;
+  font-family: RobotoBold;
+}
+
+.hourlyforecast {
+  font-size: 20px;
+}
+
+.bold {
+  font-weight: 800;
+}

@@ -21,21 +21,23 @@ async function fetchHourlyForecast(location = "") {
 
     console.log("hourlyforecastfetch", newData);
     const dataArray = newData.list;
+    console.log(dataArray, "dataarray");
     let i = 0;
-    processedForecast[`${city}`] = {};
+    // processedForecast[`${city}`] = {};
 
-    dataArray.forEach((element) => {
-      processedForecast[`${city}`][i] = { date: 0 };
+    // dataArray.forEach((element) => {
+    //   processedForecast[`${city}`][i] = { date: 0 };
 
-      processedForecast[`${city}`][`${i}`].date = getDate(element, i);
+    //   processedForecast[`${city}`][`${i}`].date = getDate(element, i);
 
-      processedForecast[`${city}`][`${i}`].temp = getTemperature(element);
-      processedForecast[`${city}`][`${i}`].description =
-        getDescriptionForecast(element);
+    //   processedForecast[`${city}`][`${i}`].temp = getTemperature(element);
+    //   processedForecast[`${city}`][`${i}`].description =
+    //     getDescriptionForecast(element);
 
-      i++;
-    });
-    return processedForecast;
+    //   i++;
+    // });
+    // return processedForecast;
+    return dataArray;
     // content.textContent = "";
   } catch (err) {
     // content.textContent = "Please type a valid location!";

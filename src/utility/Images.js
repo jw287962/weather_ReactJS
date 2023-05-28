@@ -6,7 +6,7 @@ const images = importAll(
 );
 
 function imageNum(description) {
-  if (description.includes("Cloud")) {
+  if (description.includes("Cloud") || description.includes("Haze")) {
     return 0;
   } else if (description.includes("Rain")) return 1;
   else if (description.includes("Sun") || description.includes("Clear")) {

@@ -1,22 +1,28 @@
 import Header from "./Header";
+import ForcastGraph from "./ForecastGraph";
+
+import { useEffect, useState } from "react";
+import { MyDispatch, MyState } from "../ReducerTopComponent";
+
 import WeatherBox from "./WeatherBox";
 import {
   fetchWeatherCurrent,
   fetchWeatherForecast,
   fetchHourlyForecast,
 } from "../utility/weather";
-import { useEffect, useState } from "react";
-import { MyDispatch, MyState } from "../ReducerTopComponent";
+
 import { useContext } from "react";
 
 import { images, imageNum } from "../utility/Images";
 import { useParams } from "react-router-dom";
 
+import "./css/forecast.css";
+
 function Forecast() {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
   const [forecast, setForecast] = useState({});
-  const [hourlyForecast, setHourlyForecast] = useState({});
+  const [hourlyForecast, setHourlyForecast] = useState();
 
   const { id } = useParams();
   const [data, setData] = useState();
@@ -35,8 +41,8 @@ function Forecast() {
   async function checkNoData() {
     if (state && state.expandLocation === "") {
       const data = await fetchWeatherCurrent(id);
-      console.log(state);
-      console.log(data);
+      // console.log(state);
+      // console.log(data);
 
       dispatch({
         type: "add_location",
@@ -72,7 +78,7 @@ function Forecast() {
     fetchForecast();
   }, []);
 
-  useEffect(() => {}, [data]);
+  // useEffect(() => {}, [data]);
   useEffect(() => {
     if (state.timer >= state.refreshTime) {
       setTimeout(fetchAllData, 700);
@@ -91,7 +97,26 @@ function Forecast() {
       clearInterval(timer);
     };
   }, [state]);
+  function processAMPM(string) {
+    // console.log(string);
+    const num = string * 1;
 
+    if (num > 11) {
+      if (num === 12) {
+        return num + " PM";
+      }
+      return num - 12 + " PM";
+    } else {
+      if (num === 0) {
+        return num + 12 + " AM";
+      }
+      return num + " AM";
+    }
+  }
+
+  function kelvinToF(num) {
+    return Math.round(((num - 273.15) * 9) / 5 + 32);
+  }
   return (
     <div>
       <Header></Header>
@@ -131,7 +156,43 @@ function Forecast() {
             );
           })}
       </div>
+      {/* <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph> */}
+
+      {hourlyForecast && (
+        <div className="hourlyforecast">
+          <div>
+            <div className="date">Today:</div>
+          </div>
+          {hourlyForecast.map((timedata) => (
+            <div className="hourlyforecastmini">
+              {
+                <div className="date">
+                  {groupByDate(timedata.dt_txt.substring(5, 13))}
+                </div>
+              }
+
+              <div className="flexrow btw">
+                <div>{processAMPM(timedata.dt_txt.substring(11, 13))} </div>
+                <div>Feels Like: {kelvinToF(timedata.main.feels_like)}</div>
+                <div>
+                  <strong>Min:</strong> {kelvinToF(timedata.main.temp_min)}{" "}
+                  <strong>Max:</strong> {kelvinToF(timedata.main.temp_max)}
+                </div>
+                <div> Wind: {timedata.wind.speed} m/s</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
+
+function groupByDate(string) {
+  if (string.substring(string.length - 2) === "00") {
+    return string.substring(0, string.length - 2);
+  } else {
+  }
+}
+
 export default Forecast;

@@ -32,6 +32,8 @@ function App() {
     };
     dispatch({ type: "selection", expandLocation: "" });
     fetchData();
+
+    console.log(state);
   }, []);
 
   useEffect(() => {
