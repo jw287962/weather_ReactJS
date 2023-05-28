@@ -141,6 +141,7 @@ function Forecast() {
             );
           })}
       </div>
+      {hourlyForecast && <h2 className="graphTitle">Next 24 HRS Graph</h2>}
       <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
       {hourlyForecast && (
         <div>

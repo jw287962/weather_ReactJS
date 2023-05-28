@@ -5,12 +5,16 @@ function ForcastGraph({ hourlyForecast }) {
   const width = 500;
   const height = 300;
   const graphHeight = height - 50;
-  const graphWidth = width - 50;
+  const graphWidth = width - 70;
   let counter = 0;
 
   let minTemp = 150;
+  let maxTemp = 0;
   function findMin(num, num2) {
     return num < num2 ? num : num2;
+  }
+  function handleMouseOver(e) {
+    console.log(e);
   }
   return (
     // 500 x 800 size
@@ -24,25 +28,29 @@ function ForcastGraph({ hourlyForecast }) {
       width={width}
       // transform=""
     >
-      <title id="title">Weather</title>
-      <g className="grid x-grid" id="xGrid">
-        <line x1="90" x2="90" y1="5" y2={graphHeight}></line>
-      </g>
-      <g className="grid y-grid" id="yGrid">
-        <line x1="90" x2={width} y1={graphHeight} y2={graphHeight}></line>
-      </g>
+      <title id="title">Weather Next 24 Hrs </title>
+      {hourlyForecast && (
+        <>
+          <g className="grid x-grid" id="xGrid">
+            <line x1="90" x2="90" y1="5" y2={graphHeight}></line>
+          </g>
+          <g className="grid y-grid" id="yGrid">
+            <line x1="90" x2={width} y1={graphHeight} y2={graphHeight}></line>
+          </g>
+        </>
+      )}
       <g className="labels x-labels">
         {hourlyForecast &&
           hourlyForecast.map((ele) => (
             <>
               {ele.map((data) => {
                 counter++;
-                if (counter >= 7) return null;
+                if (counter > 9) return null;
                 minTemp = findMin(convertKtoF(data.main.temp), minTemp);
                 return (
                   <>
                     <text
-                      x={50 + (counter / 7) * graphWidth}
+                      x={50 + (counter / 9) * graphWidth}
                       y={graphHeight + 25}
                     >
                       {data.dt_txt.time.substring(
@@ -62,7 +70,7 @@ function ForcastGraph({ hourlyForecast }) {
           2008
         </text>
      */}
-        <text x={width / 2} y={height} class="label-title"></text>
+        <text x={width / 2} y={height} className="label-title"></text>
       </g>
       <g className="labels y-labels">
         {(counter = 0)} {(minTemp -= 10)}
@@ -72,10 +80,13 @@ function ForcastGraph({ hourlyForecast }) {
               {ele.map((data) => {
                 if (counter >= 7) return null;
                 counter++;
-
+                maxTemp = minTemp + 60;
                 return (
                   <>
-                    <text x="70" y={graphHeight - counter * (graphHeight / 7)}>
+                    <text
+                      x="70"
+                      y={graphHeight - counter * (graphHeight / 7) - 8}
+                    >
                       {minTemp + counter * 10} °F
                     </text>
                   </>
@@ -84,6 +95,48 @@ function ForcastGraph({ hourlyForecast }) {
             </>
           ))}
         <text x="50" y={height / 2} className="label-title"></text>
+      </g>
+
+      <g className="data">
+        {(counter = 0)}
+        {hourlyForecast &&
+          hourlyForecast.map((ele) => (
+            <>
+              {ele.map((data) => {
+                if (counter > 9) return null;
+                counter++;
+
+                return (
+                  <>
+                    <circle
+                      cx={50 + (counter / 9) * graphWidth}
+                      cy={
+                        ((maxTemp - convertKtoF(data.main.temp)) /
+                          (maxTemp - minTemp)) *
+                        graphHeight
+                      }
+                      data-value={convertKtoF(data.main.temp)}
+                      r="4"
+                      onMouseOver={handleMouseOver}
+                    >
+                      {convertKtoF(data.main.temp)}
+                    </circle>
+                    <text
+                      x={50 + (counter / 9) * graphWidth}
+                      y={
+                        ((maxTemp - convertKtoF(data.main.temp)) /
+                          (maxTemp - minTemp)) *
+                          graphHeight -
+                        5
+                      }
+                    >
+                      {convertKtoF(data.main.temp)}
+                    </text>
+                  </>
+                );
+              })}
+            </>
+          ))}
       </g>
     </svg>
   );

@@ -18,6 +18,11 @@
   font-size: 13px;
 }
 
+.graphTitle {
+  text-align: center;
+  margin: 0px;
+}
+
 .label-title {
   font-weight: bold;
   text-transform: uppercase;
@@ -26,6 +31,9 @@
 }
 
 .data {
-  fill: red;
-  stroke-width: 1;
+  fill: rgb(248, 182, 0);
+}
+
+.data > text {
+  fill: rgb(0, 0, 0);
 }
