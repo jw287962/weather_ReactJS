@@ -5,7 +5,6 @@ import WeatherBoxData from "./WeatherBoxData";
 import { useEffect, useState } from "react";
 import { MyDispatch, MyState } from "../ReducerTopComponent";
 
-import WeatherBox from "./WeatherBox";
 import {
   fetchWeatherCurrent,
   fetchWeatherForecast,
@@ -142,7 +141,7 @@ function Forecast() {
             );
           })}
       </div>
-      {/* <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph> */}
+      <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
 
       {hourlyForecast && (
         <div>
@@ -158,7 +157,6 @@ function Forecast() {
               {toggleDate === i &&
                 date.map((timedata) => (
                   <>
-                    
                     <div
                       className={`hourlyforecastmini ${timedata.dt_txt.date}`}
                     >

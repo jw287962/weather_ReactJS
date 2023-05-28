@@ -5,12 +5,9 @@
 .graph .labels.y-labels {
   text-anchor: end;
 }
-
-.graph {
-  height: 500px;
-  width: 800px;
+.labels {
+  font-family: Roboto, arial;
 }
-
 .graph .grid {
   stroke: #ccc;
   stroke-dasharray: 0;

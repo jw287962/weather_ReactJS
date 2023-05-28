@@ -25,7 +25,7 @@ function groupBy(array) {
       newArray[i].push(ele);
     } else if (comparison !== previousString) {
       i++;
-      newArray.push([]);
+      newArray.push([ele]);
     }
 
     previousString = comparison;
@@ -53,7 +53,7 @@ async function fetchHourlyForecast(location = "") {
     // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
     const result = groupBy(holder);
-
+    console.log(result);
     return result;
     // content.textContent = "";
   } catch (err) {

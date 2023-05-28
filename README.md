@@ -20,7 +20,11 @@ Current:
 
 --- maybe the user can change update timer based on preferences.
 
-OTHER
+## Reminders
+
+changed some data that is returned
+
+1. dt_txt: is updated to hold {date: 'May 28,2023', time: '4:00 PM'}
 
 # Getting Started with Create React App
 
