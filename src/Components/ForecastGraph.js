@@ -1,11 +1,17 @@
 import "./css/forecastGraph.css";
 
+import { convertKtoF } from "../utility/weather";
 function ForcastGraph({ hourlyForecast }) {
   const width = 500;
-  const height = 500;
+  const height = 300;
   const graphHeight = height - 50;
   const graphWidth = width - 50;
   let counter = 0;
+
+  let minTemp = 150;
+  function findMin(num, num2) {
+    return num < num2 ? num : num2;
+  }
   return (
     // 500 x 800 size
     <svg
@@ -20,10 +26,10 @@ function ForcastGraph({ hourlyForecast }) {
     >
       <title id="title">Weather</title>
       <g className="grid x-grid" id="xGrid">
-        <line x1="90" x2="90" y1="5" y2="450"></line>
+        <line x1="90" x2="90" y1="5" y2={graphHeight}></line>
       </g>
       <g className="grid y-grid" id="yGrid">
-        <line x1="90" x2="705" y1="450" y2="450"></line>
+        <line x1="90" x2={width} y1={graphHeight} y2={graphHeight}></line>
       </g>
       <g className="labels x-labels">
         {hourlyForecast &&
@@ -32,11 +38,12 @@ function ForcastGraph({ hourlyForecast }) {
               {ele.map((data) => {
                 counter++;
                 if (counter >= 7) return null;
+                minTemp = findMin(convertKtoF(data.main.temp), minTemp);
                 return (
                   <>
                     <text
                       x={50 + (counter / 7) * graphWidth}
-                      y={graphWidth + 25}
+                      y={graphHeight + 25}
                     >
                       {data.dt_txt.time.substring(
                         0,
@@ -55,44 +62,28 @@ function ForcastGraph({ hourlyForecast }) {
           2008
         </text>
      */}
-        <text x={width / 2} y={height} class="label-title">
-          Time (Hour)
-        </text>
+        <text x={width / 2} y={height} class="label-title"></text>
       </g>
       <g className="labels y-labels">
-        {(counter = 0)}
-
+        {(counter = 0)} {(minTemp -= 10)}
         {hourlyForecast &&
           hourlyForecast.map((ele) => (
             <>
-              {ele.map((data, counter) => {
+              {ele.map((data) => {
                 if (counter >= 7) return null;
+                counter++;
+
                 return (
                   <>
                     <text x="70" y={graphHeight - counter * (graphHeight / 7)}>
-                      {counter * 10}
+                      {minTemp + counter * 10} °F
                     </text>
                   </>
                 );
               })}
             </>
           ))}
-
-        {/* <text x="80" y="15">
-          80
-        </text>
-        <text x="80" y="131">
-          60
-        </text>
-        <text x="80" y="248">
-          40
-        </text>
-        <text x="80" y="373">
-          20
-        </text> */}
-        <text x="50" y="200" className="label-title">
-          Temp (F)
-        </text>
+        <text x="50" y={height / 2} className="label-title"></text>
       </g>
     </svg>
   );
