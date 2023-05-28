@@ -39,10 +39,11 @@ function App() {
   useEffect(() => {
     if (currentLocation != "") {
       fetchWeatherCurrent(currentLocation).then((data) => {
+        console.log(data);
         dispatch({
           type: "add_location",
-          activeLocation: data.city,
-          locationsData: { ...state.locationsData, [data.city]: { ...data } },
+          activeLocation: data.name,
+          locationsData: { ...state.locationsData, [data.name]: { ...data } },
         });
       });
       dispatch({ type: "loading", loading: false });
@@ -58,10 +59,10 @@ function App() {
           .then((data) => {
             dispatch({
               type: "add_location",
-              activeLocation: data.city,
+              activeLocation: data.name,
               locationsData: {
                 ...state.locationsData,
-                [data.city]: { ...data },
+                [data.name]: { ...data },
               },
             });
             dispatch({ type: "error", error: "" });

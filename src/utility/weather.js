@@ -53,11 +53,8 @@ async function fetchHourlyForecast(location = "") {
     // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
     const result = groupBy(holder);
-    console.log(result);
     return result;
-    // content.textContent = "";
   } catch (err) {
-    // content.textContent = "Please type a valid location!";
     throw new Error("ERROR:" + err);
   }
 }
@@ -66,9 +63,7 @@ async function fetchWeatherForecast(location = "Madison") {
     return;
   }
   try {
-    // content.textContent = "loading ... (please wait)";
     const city = location;
-    // const city = location.substring(0, location.indexOf(","));
 
     const promise = await fetch(
       "https://api.openweathermap.org" +

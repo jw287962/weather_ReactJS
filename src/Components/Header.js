@@ -36,8 +36,8 @@ function Header() {
       .then((data) => {
         dispatch({
           type: "add_location",
-          activeLocation: data.city,
-          locationsData: { ...state.locationsData, [data.city]: { ...data } },
+          activeLocation: data.name,
+          locationsData: { ...state.locationsData, [data.name]: { ...data } },
         });
         dispatch({ type: "error", error: "" });
       })

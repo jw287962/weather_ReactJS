@@ -28,15 +28,16 @@ function Forecast() {
 
   const { id } = useParams();
   const [data, setData] = useState();
+  console.log(state);
 
   async function updateData() {
     const data = await fetchWeatherCurrent(id);
     dispatch({
       type: "add_location",
-      activeLocation: data.city,
+      activeLocation: data.name,
       locationsData: {
         ...state.locationsData,
-        [data.city]: { ...data },
+        [data.name]: { ...data },
       },
     });
   }
@@ -48,10 +49,10 @@ function Forecast() {
 
       dispatch({
         type: "add_location",
-        activeLocation: data.city,
+        activeLocation: data.name,
         locationsData: {
           ...state.locationsData,
-          [data.city]: { ...data },
+          [data.name]: { ...data },
         },
       });
       setData(data);

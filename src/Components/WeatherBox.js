@@ -33,7 +33,7 @@ function WeatherBox({ data }) {
           to={`/location/${data.name}`}
           // href={`/location/${location}`}
           key-location={`${data.name}${0}`}
-          data-location={data.city}
+          data-location={data.name}
         >
           <WeatherBoxData data={data}></WeatherBoxData>
         </Link>
