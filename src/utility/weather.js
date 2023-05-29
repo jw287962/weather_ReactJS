@@ -59,63 +59,25 @@ async function fetchHourlyForecast(location = "") {
     throw new Error("ERROR:" + err);
   }
 }
-async function fetchWeatherForecast(location = "Madison") {
-  if (location === "") {
-    return;
-  }
-  try {
-    const city = location;
+// function getDate(element, num) {
+//   const addNum = num * 86400000 + element.dt;
 
-    const promise = await fetch(
-      "https://api.openweathermap.org" +
-        `/data/2.5/forecast?q=${city}&` +
-        "APPID=19d6b05066109b1f4f25ae216d98acf3",
-      { mode: "cors" }
-    );
-    const newData = await promise.json();
-
-    const dataArray = newData.list;
-    let j = 0;
-    processedForecast[`${city}`] = {};
-    console.log(dataArray, "dataarray");
-    dataArray.forEach((element, i) => {
-      if (i % 7) {
-        processedForecast[city][j] = { date: 0 };
-
-        processedForecast[city][j].date = getDate(element, i);
-
-        processedForecast[city][j].temp = getTemperature(element);
-        processedForecast[city][j].description =
-          getDescriptionForecast(element);
-        j++;
-      }
-    });
-    return processedForecast;
-    // content.textContent = "";
-  } catch (err) {
-    // content.textContent = "Please type a valid location!";
-    throw new Error("ERROR:" + err);
-  }
-}
-function getDate(element, num) {
-  const addNum = num * 86400000 + element.dt;
-
-  const date = format(addNum, "iiiiii");
-  return date;
-}
+//   const date = format(addNum, "iiiiii");
+//   return date;
+// }
 function getDescriptionForecast(element) {
   const description = element.weather[0].description;
 
   let holder = capitalizeFirstLetter(description);
   return holder;
 }
-function getTemperature(element) {
-  const currentTemp = element.main.temp;
+// function getTemperature(element) {
+//   const currentTemp = element.main.temp;
 
-  const newTemp = (1.8 * (currentTemp - 273) + 32).toFixed(0);
+//   const newTemp = (1.8 * (currentTemp - 273) + 32).toFixed(0);
 
-  return newTemp;
-}
+//   return newTemp;
+// }
 
 function getProcessedForecast() {
   return processedForecast;
@@ -249,7 +211,6 @@ function findMax(num, num2) {
   return num > num2 ? num : num2;
 }
 export {
-  fetchWeatherForecast,
   getDescriptionForecast,
   fetchWeatherCurrent,
   getProcessedForecast,

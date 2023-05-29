@@ -7,7 +7,6 @@ import { MyDispatch, MyState } from "../ReducerTopComponent";
 
 import {
   fetchWeatherCurrent,
-  fetchWeatherForecast,
   fetchHourlyForecast,
   findMin,
   findMax,
@@ -63,8 +62,6 @@ function Forecast() {
     }
   }
   async function fetchForecast() {
-    // const result = await fetchWeatherForecast(state.expandLocation || id);
-    // setForecast(Object.values(result[`${state.expandLocation || id}`]));
     const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
     console.log(hourlyData);
     setForecast(reduceHourlyData(hourlyData));
