@@ -63,7 +63,6 @@ function Forecast() {
   }
   async function fetchForecast() {
     const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
-    console.log(hourlyData);
     setForecast(reduceHourlyData(hourlyData));
     setHourlyForecast(hourlyData);
     dispatch({ type: "loading", loading: false });
@@ -88,7 +87,6 @@ function Forecast() {
       newArray.push(dayWeather);
     });
 
-    console.log(newArray);
     return newArray;
   }
 
