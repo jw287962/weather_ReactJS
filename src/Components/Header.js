@@ -49,7 +49,7 @@ function Header() {
   return (
     <div className="header">
       <div>
-        <Link to={`/`} onClick={handleHomeClick}>
+        <Link to={`/weather_ReactJS`} onClick={handleHomeClick}>
           WEATHER FORECAST
         </Link>
         <a href="https://github.com/jw287962/weather_ReactJS">

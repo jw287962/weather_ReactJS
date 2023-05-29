@@ -1,6 +1,6 @@
 import App from "./App.js";
 
-import { useReducer, createContext } from "react";
+import { useReducer, createContext, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Header from "./Components/Header.js";
 import Forecast from "./Components/Forecast.js";
@@ -9,6 +9,9 @@ export const MyDispatch = createContext("dispatch");
 export const MyState = createContext("state");
 
 function Reducer() {
+  useEffect(() => {
+    document.title = "Weather App";
+  });
   const initialState = {
     locations: [],
     activeLocation: "",
@@ -20,16 +23,19 @@ function Reducer() {
     timer: 0,
     refreshTime: 40,
   };
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <App />,
-    },
-    {
-      path: "location/:id",
-      element: <Forecast></Forecast>,
-    },
-  ]);
+  const router = createBrowserRouter(
+    [
+      {
+        path: "/",
+        element: <App />,
+      },
+      {
+        path: "/location/:id",
+        element: <Forecast></Forecast>,
+      },
+    ],
+    { basename: "/weather_ReactJS" }
+  );
 
   const [state, dispatch] = useReducer(reducer, initialState);
 

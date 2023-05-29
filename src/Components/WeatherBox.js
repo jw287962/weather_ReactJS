@@ -30,7 +30,7 @@ function WeatherBox({ data }) {
         <Link
           onClick={toggleView}
           className="weatherdetails"
-          to={`/location/${data.name}`}
+          to={`/weather_ReactJS/location/${data.name}`}
           // href={`/location/${location}`}
           key-location={`${data.name}${0}`}
           data-location={data.name}

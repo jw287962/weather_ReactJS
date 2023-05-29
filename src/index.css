@@ -85,7 +85,7 @@ a {
 }
 /* content */
 .weatherdetails {
-  min-width: 560px;
+  min-width: 700px;
 }
 .weatherdetails {
   position: relative;
@@ -226,8 +226,5 @@ button:active {
   }
   body {
     min-width: 400px;
-  }
-  .graph {
-    transform: scale(0.95);
   }
 }
