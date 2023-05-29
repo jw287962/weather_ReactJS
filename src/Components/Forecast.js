@@ -154,7 +154,7 @@ function Forecast() {
               return null;
             }
             return (
-              <div className="day">
+              <div className="day" key={day.day}>
                 <div className="date">{day.day}</div>
                 <img src={images[imageNum(day.description)]}></img>
                 <div className="temperature">
@@ -179,6 +179,7 @@ function Forecast() {
               className="hourlyforecast"
               data-date={date[0].dt_txt.date}
               onClick={() => setToggleDate(i)}
+              key={`${date[0].dt_txt.date}`}
             >
               <div className="date">
                 {i === 0 ? "Today" : date[0].dt_txt.date}
@@ -188,6 +189,7 @@ function Forecast() {
                   <>
                     <div
                       className={`hourlyforecastmini ${timedata.dt_txt.date}`}
+                      key={`${timedata.dt_txt.date}${timedata.dt_txt.time}`}
                     >
                       <div>
                         <div>{timedata.dt_txt.time}</div>

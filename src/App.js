@@ -103,7 +103,7 @@ function App() {
           <div className="content"></div>
           {state.locations.map((location, i) => {
             const data = state.locationsData[location];
-            return <WeatherBox data={data}></WeatherBox>;
+            return <WeatherBox data={data} key={location}></WeatherBox>;
           })}
         </>
       )}
