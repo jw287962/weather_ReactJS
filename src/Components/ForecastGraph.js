@@ -1,8 +1,8 @@
 import "./css/forecastGraph.css";
 
-import { convertKtoF } from "../utility/weather";
+import { convertKtoF, findMin } from "../utility/weather";
 function ForcastGraph({ hourlyForecast }) {
-  const width = 500;
+  const width = 450;
   const height = 300;
   const graphHeight = height - 50;
   const graphWidth = width - 70;
@@ -10,9 +10,7 @@ function ForcastGraph({ hourlyForecast }) {
 
   let minTemp = 150;
   let maxTemp = 0;
-  function findMin(num, num2) {
-    return num < num2 ? num : num2;
-  }
+
   function handleMouseOver(e) {
     console.log(e);
   }
@@ -32,10 +30,10 @@ function ForcastGraph({ hourlyForecast }) {
       {hourlyForecast && (
         <>
           <g className="grid x-grid" id="xGrid">
-            <line x1="90" x2="90" y1="5" y2={graphHeight}></line>
+            <line x1="70" x2="70" y1="5" y2={graphHeight}></line>
           </g>
           <g className="grid y-grid" id="yGrid">
-            <line x1="90" x2={width} y1={graphHeight} y2={graphHeight}></line>
+            <line x1="70" x2={width} y1={graphHeight} y2={graphHeight}></line>
           </g>
         </>
       )}
@@ -50,7 +48,7 @@ function ForcastGraph({ hourlyForecast }) {
                 return (
                   <>
                     <text
-                      x={50 + (counter / 9) * graphWidth}
+                      x={25 + (counter / 9) * graphWidth}
                       y={graphHeight + 25}
                     >
                       {data.dt_txt.time.substring(
@@ -84,7 +82,7 @@ function ForcastGraph({ hourlyForecast }) {
                 return (
                   <>
                     <text
-                      x="70"
+                      x="50"
                       y={graphHeight - counter * (graphHeight / 7) - 8}
                     >
                       {minTemp + counter * 10} °F
@@ -109,7 +107,7 @@ function ForcastGraph({ hourlyForecast }) {
                 return (
                   <>
                     <circle
-                      cx={50 + (counter / 9) * graphWidth}
+                      cx={33 + (counter / 9) * graphWidth}
                       cy={
                         ((maxTemp - convertKtoF(data.main.temp)) /
                           (maxTemp - minTemp)) *
@@ -122,7 +120,7 @@ function ForcastGraph({ hourlyForecast }) {
                       {convertKtoF(data.main.temp)}
                     </circle>
                     <text
-                      x={50 + (counter / 9) * graphWidth}
+                      x={33 + (counter / 9) * graphWidth}
                       y={
                         ((maxTemp - convertKtoF(data.main.temp)) /
                           (maxTemp - minTemp)) *

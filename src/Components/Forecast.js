@@ -9,6 +9,9 @@ import {
   fetchWeatherCurrent,
   fetchWeatherForecast,
   fetchHourlyForecast,
+  findMin,
+  findMax,
+  getDescriptionForecast,
 } from "../utility/weather";
 
 import { useContext } from "react";
@@ -28,7 +31,6 @@ function Forecast() {
 
   const { id } = useParams();
   const [data, setData] = useState();
-  console.log(state);
 
   async function updateData() {
     const data = await fetchWeatherCurrent(id);
@@ -61,15 +63,36 @@ function Forecast() {
     }
   }
   async function fetchForecast() {
-    const result = await fetchWeatherForecast(state.expandLocation || id);
-    setForecast(Object.values(result[`${state.expandLocation || id}`]));
+    // const result = await fetchWeatherForecast(state.expandLocation || id);
+    // setForecast(Object.values(result[`${state.expandLocation || id}`]));
     const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
+    console.log(hourlyData);
+    setForecast(reduceHourlyData(hourlyData));
     setHourlyForecast(hourlyData);
     dispatch({ type: "loading", loading: false });
   }
   function fetchAllData() {
     updateData();
     fetchForecast();
+  }
+  function reduceHourlyData(hourlyData) {
+    const newArray = [];
+    hourlyData.map((ele) => {
+      const dayWeather = {
+        temp_min: 500,
+        temp_max: 0,
+        day: ele[0].dt_txt.day,
+      };
+      ele.map((elem) => {
+        dayWeather.temp_min = findMin(elem.main.temp_min, dayWeather.temp_min);
+        dayWeather.temp_max = findMax(elem.main.temp_max, dayWeather.temp_max);
+        dayWeather.description = getDescriptionForecast(elem);
+      });
+      newArray.push(dayWeather);
+    });
+
+    console.log(newArray);
+    return newArray;
   }
 
   useEffect(() => {
@@ -135,15 +158,23 @@ function Forecast() {
             }
             return (
               <div className="day">
-                <div className="date">{day.date}</div>
-                <div className="temperature">{day.temp}</div>
+                <div className="date">{day.day}</div>
                 <img src={images[imageNum(day.description)]}></img>
+                <div className="temperature">
+                  {kelvinToF(day.temp_max)}°F
+                </div>{" "}
+                <span>|</span>
+                <div className="temperature min">
+                  {kelvinToF(day.temp_min)}°F
+                </div>
               </div>
             );
           })}
       </div>
       {hourlyForecast && <h2 className="graphTitle">Next 24 HRS Graph</h2>}
-      <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
+      <div className="graphContainer">
+        <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
+      </div>
       {hourlyForecast && (
         <div>
           {hourlyForecast.map((date, i) => (
@@ -173,7 +204,6 @@ function Forecast() {
                             {kelvinToF(timedata.main.temp_max) + "°F"}
                           </span>
                         </div>
-                        {/* <div> Wind: {timedata.wind.speed} m/s</div> */}
                       </div>
                     </div>
                   </>

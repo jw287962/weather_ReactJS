@@ -14,8 +14,9 @@ function groupBy(array) {
   array.forEach((ele) => {
     const array = updateTimeZone(ele.dt);
     ele.dt_txt = {
-      date: array[0] + "," + array[1],
+      date: array[0].substring(3) + "," + array[1],
       time: array[2].substring(1),
+      day: array[0].substring(0, 3),
     };
     const comparison = ele.dt_txt.date;
 
@@ -34,7 +35,7 @@ function groupBy(array) {
 }
 function updateTimeZone(origTime) {
   const newTime = origTime;
-  const formatted = formatMSTime(newTime, "PPp");
+  const formatted = formatMSTime(newTime, "eeePPp");
   return formatted.split(",");
 }
 async function fetchHourlyForecast(location = "") {
@@ -74,19 +75,20 @@ async function fetchWeatherForecast(location = "Madison") {
     const newData = await promise.json();
 
     const dataArray = newData.list;
-    let i = 0;
+    let j = 0;
     processedForecast[`${city}`] = {};
+    console.log(dataArray, "dataarray");
+    dataArray.forEach((element, i) => {
+      if (i % 7) {
+        processedForecast[city][j] = { date: 0 };
 
-    dataArray.forEach((element) => {
-      processedForecast[`${city}`][i] = { date: 0 };
+        processedForecast[city][j].date = getDate(element, i);
 
-      processedForecast[`${city}`][`${i}`].date = getDate(element, i);
-
-      processedForecast[`${city}`][`${i}`].temp = getTemperature(element);
-      processedForecast[`${city}`][`${i}`].description =
-        getDescriptionForecast(element);
-
-      i++;
+        processedForecast[city][j].temp = getTemperature(element);
+        processedForecast[city][j].description =
+          getDescriptionForecast(element);
+        j++;
+      }
     });
     return processedForecast;
     // content.textContent = "";
@@ -239,10 +241,20 @@ function formatMSTime(data, formatter = "p") {
 function convertKtoF(num) {
   return Math.round(((num - 273.15) * 9) / 5 + 32);
 }
+
+function findMin(num, num2) {
+  return num < num2 ? num : num2;
+}
+function findMax(num, num2) {
+  return num > num2 ? num : num2;
+}
 export {
   fetchWeatherForecast,
+  getDescriptionForecast,
   fetchWeatherCurrent,
   getProcessedForecast,
   fetchHourlyForecast,
   convertKtoF,
+  findMin,
+  findMax,
 };
