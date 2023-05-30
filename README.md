@@ -2,23 +2,24 @@
 
 ## HOW TO USE:
 
-1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOURCURRENT LOCATIONS WEATHER DATA)
-2.  CLICK THE WEATHER CARD TO GET INDEPTH DETAILS
+1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOUR CURRENT LOCATIONS WEATHER DATA)
+2.  CLICK THE WEATHER CARD TO GET INDEPTH DETAILS. click Title to return back to home page
 
 ## VIA OpenweatherAPI
 
 Current:
 
-- To create working prototype, did the basic api call that accepts CITIES. (The current CITY lookup APi seems to sometimes call the larger nearby city data instead)
-- Has timer since last refresh, should update every 40 seconds....
-- INDEPTH DETAILS ONLY SHOW 5 DAYS AND BASIC DATA... WILL UPDATE AND SHOW MORE RELEVANT AND INTERESTING DATA.
+- To create working prototype, did the basic api call that accepts CITY LOOKUP (and works with location settings on). (The current CITY lookup APi seems to sometimes call the larger nearby city data instead).
+- can add multiple cards each holding a different location to navigate into for more details
+- v1.1 Has timer since last refresh, should update every 40 seconds....
+- v1.2 Improved location details to include 5 day forecast and 24 hour graph
 
-## Future/Improvements to be done:
+## Future/Improvements:
 
 - Improve API call to allow more specific searches, and to show search results while searching.
 - allow caching or some storage of data on computer with the locations the user wants (can delete or add), and will populate with API data upon website load.
-
---- maybe the user can change update timer based on preferences.
+- show specific data on the graph when cilcking a point or hovering...?
+- add a way so user can change refresh timer based on preferences.
 
 ## Reminders
 
