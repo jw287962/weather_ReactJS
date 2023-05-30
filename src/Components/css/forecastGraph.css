@@ -9,8 +9,14 @@
   font-family: Roboto, arial;
 }
 .graph .grid {
-  stroke: #ccc;
+  stroke: #b4b4b4;
   stroke-dasharray: 0;
+  stroke-width: 1;
+}
+
+.dottedgrid {
+  stroke: #ccc;
+  stroke-dasharray: 3;
   stroke-width: 1;
 }
 

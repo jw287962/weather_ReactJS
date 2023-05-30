@@ -44,7 +44,7 @@ function ForcastGraph({ hourlyForecast }) {
               {ele.map((data) => {
                 counter++;
                 if (counter > 9) return null;
-                minTemp = findMin(convertKtoF(data.main.temp), minTemp);
+                minTemp = findMin(convertKtoF(data.main.temp) - 10, minTemp);
                 return (
                   <>
                     <text
@@ -59,6 +59,12 @@ function ForcastGraph({ hourlyForecast }) {
                           data.dt_txt.time.indexOf("M") - 2
                         )}
                     </text>
+                    <line
+                      x1={(counter / 9) * graphWidth}
+                      x2={width}
+                      y1={graphHeight + 25}
+                      y2={graphHeight + 25}
+                    ></line>
                   </>
                 );
               })}
@@ -71,7 +77,7 @@ function ForcastGraph({ hourlyForecast }) {
         <text x={width / 2} y={height} className="label-title"></text>
       </g>
       <g className="labels y-labels">
-        {(counter = 0)} {(minTemp -= 10)}
+        {(counter = 0)}
         {hourlyForecast &&
           hourlyForecast.map((ele) => (
             <>
@@ -83,10 +89,30 @@ function ForcastGraph({ hourlyForecast }) {
                   <>
                     <text
                       x="50"
-                      y={graphHeight - counter * (graphHeight / 7) - 8}
+                      y={
+                        graphHeight -
+                        (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                          (maxTemp - minTemp)
+                      }
                     >
                       {minTemp + counter * 10} °F
                     </text>
+
+                    <line
+                      className="dottedgrid"
+                      x1="70"
+                      x2={width}
+                      y1={
+                        graphHeight -
+                        (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                          (maxTemp - minTemp)
+                      }
+                      y2={
+                        graphHeight -
+                        (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                          (maxTemp - minTemp)
+                      }
+                    ></line>
                   </>
                 );
               })}
