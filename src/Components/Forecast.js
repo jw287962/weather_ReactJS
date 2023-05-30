@@ -10,7 +10,9 @@ import {
   fetchHourlyForecast,
   findMin,
   findMax,
+  groupBy,
   getDescriptionForecast,
+  convertKtoF,
 } from "../utility/weather";
 
 import { useContext } from "react";
@@ -24,7 +26,8 @@ function Forecast() {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
   const [forecast, setForecast] = useState({});
-  const [hourlyForecast, setHourlyForecast] = useState();
+  const [organizedForecast, setOrganizedForecast] = useState();
+  // const [dailyGraphData, setDailyGraphData] = useState(0);
 
   const [toggleDate, setToggleDate] = useState(0);
 
@@ -63,8 +66,10 @@ function Forecast() {
   }
   async function fetchForecast() {
     const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
-    setForecast(reduceHourlyData(hourlyData));
-    setHourlyForecast(hourlyData);
+    const grouped = groupBy(hourlyData);
+    setForecast(reduceHourlyData(grouped));
+    setOrganizedForecast(grouped);
+
     dispatch({ type: "loading", loading: false });
   }
   function fetchAllData() {
@@ -133,9 +138,6 @@ function Forecast() {
     }
   }
 
-  function kelvinToF(num) {
-    return Math.round(((num - 273.15) * 9) / 5 + 32);
-  }
   return (
     <div>
       <Header></Header>
@@ -156,23 +158,26 @@ function Forecast() {
                 <div className="date">{day.day}</div>
                 <img src={images[imageNum(day.description)]}></img>
                 <div className="temperature">
-                  {kelvinToF(day.temp_max)}°F
+                  {convertKtoF(day.temp_max)}°F
                 </div>{" "}
                 <span>|</span>
                 <div className="temperature min">
-                  {kelvinToF(day.temp_min)}°F
+                  {convertKtoF(day.temp_min)}°F
                 </div>
               </div>
             );
           })}
       </div>
-      {hourlyForecast && <h2 className="graphTitle">Next 24 HRS Graph</h2>}
+      {organizedForecast && <h2 className="graphTitle">Next 24 HRS Graph</h2>}
       <div className="graphContainer">
-        <ForcastGraph hourlyForecast={hourlyForecast}></ForcastGraph>
+        <ForcastGraph
+          organizedForecast={organizedForecast}
+          dailyGraphData={toggleDate}
+        ></ForcastGraph>
       </div>
-      {hourlyForecast && (
+      {organizedForecast && (
         <div>
-          {hourlyForecast.map((date, i) => (
+          {organizedForecast.map((date, i) => (
             <div
               className="hourlyforecast"
               data-date={date[0].dt_txt.date}
@@ -191,14 +196,16 @@ function Forecast() {
                     >
                       <div>
                         <div>{timedata.dt_txt.time}</div>
-                        <div>Feel: {kelvinToF(timedata.main.feels_like)}°F</div>
+                        <div>
+                          Feel: {convertKtoF(timedata.main.feels_like)}°F
+                        </div>
                         <div>
                           <span className="min">
-                            {kelvinToF(timedata.main.temp_min) + "°F"}
+                            {convertKtoF(timedata.main.temp_min) + "°F"}
                           </span>
                           {" - "}
                           <span className="max">
-                            {kelvinToF(timedata.main.temp_max) + "°F"}
+                            {convertKtoF(timedata.main.temp_max) + "°F"}
                           </span>
                         </div>
                       </div>

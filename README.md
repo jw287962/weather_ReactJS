@@ -10,7 +10,7 @@
 Current:
 
 - To create working prototype, did the basic api call that accepts CITY LOOKUP (and works with location settings on). (The current CITY lookup APi seems to sometimes call the larger nearby city data instead).
-- can add multiple cards each holding a different location to navigate into for more details
+- can add multiple cards each holding a different location to navigate into for more detailsw
 - v1.1 Has timer since last refresh, should update every 40 seconds....
 - v1.2 Improved location details to include 5 day forecast and 24 hour graph
 

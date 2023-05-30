@@ -53,8 +53,8 @@ async function fetchHourlyForecast(location = "") {
 
     // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
-    const result = groupBy(holder);
-    return result;
+    // const result = groupBy(holder);
+    return holder;
   } catch (err) {
     throw new Error("ERROR:" + err);
   }
@@ -201,7 +201,8 @@ function formatMSTime(data, formatter = "p") {
 // }
 
 function convertKtoF(num) {
-  return Math.round(((num - 273.15) * 9) / 5 + 32);
+  // return Math.round(((num - 273.15) * 9) / 5 + 32);
+  return (((num - 273.15) * 9) / 5 + 32).toFixed(0);
 }
 
 function findMin(num, num2) {
@@ -218,4 +219,5 @@ export {
   convertKtoF,
   findMin,
   findMax,
+  groupBy,
 };
