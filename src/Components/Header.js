@@ -18,6 +18,8 @@ function Header() {
 
   function processNewLocation(e) {
     e.preventDefault();
+    dispatch({ type: "loading", loading: true });
+
     console.log();
     if (
       state.locationsData[
@@ -29,7 +31,6 @@ function Header() {
       dispatch({ type: "error", error: "Duplicate Location" });
       return;
     }
-    dispatch({ type: "loading", loading: true });
 
     const processedData = fetchWeatherCurrent(searchTerm);
     processedData

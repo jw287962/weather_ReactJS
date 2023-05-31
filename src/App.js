@@ -32,10 +32,9 @@ function App() {
   useEffect(() => {
     if (currentLocation != "") {
       fetchWeatherCurrent(currentLocation).then((data) => {
-        console.log(data);
         refreshDispatch(data);
+        dispatch({ type: "loading", loading: false });
       });
-      dispatch({ type: "loading", loading: false });
     }
   }, [currentLocation]);
 

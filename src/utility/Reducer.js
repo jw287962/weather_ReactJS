@@ -43,6 +43,7 @@ function reducer(state, action) {
     return {
       ...state,
       error: action.error,
+      loading: "",
     };
   }
   if (action.type === "loading") {
