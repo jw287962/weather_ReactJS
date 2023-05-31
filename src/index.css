@@ -100,6 +100,15 @@ a {
   color: rgb(85, 85, 85);
   font-size: 17px;
 }
+
+.deleteContainer {
+  display: inline;
+  position: absolute;
+  z-index: 99;
+  right: 0px;
+  top: 0px;
+}
+
 .temp {
   vertical-align: bottom;
   display: flex;

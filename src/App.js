@@ -86,11 +86,13 @@ function App() {
           {/* <button className="refresh"></button> */}
           <div className="content"></div>
           {state.locations &&
-            state.locations.map((location) => {
+            state.locations.map((location, i) => {
               const data = state.locationsData[location];
-              if (data && data.name)
-                return <WeatherBox data={data} key={location}></WeatherBox>;
-              else return null;
+              // if (data && data.name)
+              return (
+                <WeatherBox data={data} key={location} num={i}></WeatherBox>
+              );
+              // else return null;
             })}
         </>
       )}

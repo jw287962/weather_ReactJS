@@ -31,23 +31,13 @@ function reducer(state, action) {
     }
   }
   if (action.type === "removeLocation") {
+    console.log(state);
     return {
       ...state,
-      locations: [action.activeLocation],
+      locations: [...state.locations],
+      locationsData: { ...action.locationsData },
     };
   }
-
-  // if (action.type === "addFromCookieLocation") {
-  //   console.log(state);
-
-  //   return {
-  //     ...state,
-  //     locations: [...action.locations],
-  //     activeLocation: action.activeLocation,
-  //     locationsData: { ...action.locationsData },
-  //     timer: 0,
-  //   };
-  // }
 
   if (action.type === "error") {
     return {

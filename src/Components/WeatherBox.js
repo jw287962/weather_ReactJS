@@ -1,15 +1,17 @@
 import Forecast from "./Forecast";
 import WeatherBoxData from "./WeatherBoxData";
 
+import Icon from "@mdi/react";
+import { mdiDelete } from "@mdi/js";
+
 import { convertKtoF } from "../utility/weather";
-
-import { MyDispatch, MyState } from "../ReducerTopComponent";
-
-import { useContext } from "react";
 import { images, imageNum } from "../utility/Images";
 
+import { MyDispatch, MyState } from "../ReducerTopComponent";
+import { useContext } from "react";
+
 import { Link } from "react-router-dom";
-function WeatherBox({ data }) {
+function WeatherBox({ data, num }) {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
 
@@ -18,6 +20,18 @@ function WeatherBox({ data }) {
       type: "selection",
       expandLocation: e.target.dataset.location,
     });
+  }
+  function handleDelete(e) {
+    e.preventDefault();
+    const copy = state.locationsData;
+    delete copy[data.name];
+    dispatch({
+      type: "removeLocation",
+      locations: state.locations.splice(num, 1),
+      locationsData: copy,
+    });
+
+    console.log(data);
   }
 
   if (state.expandLocation) {
@@ -36,6 +50,9 @@ function WeatherBox({ data }) {
           data-location={data.name}
         >
           <WeatherBoxData data={data}></WeatherBoxData>
+          <div onClick={handleDelete} className="deleteContainer">
+            <Icon className="delete" path={mdiDelete} size={1} />
+          </div>
         </Link>
       )}
     </>

@@ -25,7 +25,7 @@ function WeatherBoxData({ data }) {
       <div className="description">{data.description}</div>
       <div className="humidity">Humidity: {data.main.humidity}%</div>
 
-      <div className="forecastbuttons"></div>
+      {/* <div className="forecastbuttons"></div> */}
       <div className="sundetails">
         <div>{data.sys.country}</div>
         <div>Wind: {data.wind.speed} m/s</div>
