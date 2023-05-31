@@ -41,7 +41,6 @@ function Reducer() {
               type: "add_location",
               activeLocation: data.name,
               locationsData: {
-                ...state.locationsData,
                 [data.name]: { ...data },
               },
             });

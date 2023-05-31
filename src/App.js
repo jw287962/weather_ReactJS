@@ -16,7 +16,7 @@ function App() {
     dispatch({
       type: "add_location",
       activeLocation: data.name,
-      locationsData: { ...state.locationsData, [data.name]: { ...data } },
+      locationsData: { [data.name]: { ...data } },
     });
   }
   useEffect(() => {
@@ -30,6 +30,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    dispatch({ type: "loading", loading: true });
     if (currentLocation != "") {
       fetchWeatherCurrent(currentLocation).then((data) => {
         refreshDispatch(data);
