@@ -19,8 +19,9 @@ Current:
 
 ## Future/Improvements:
 
+(✓) allow caching or some storage of data on computer with the locations the user wants (can delete or add), and will populate with API data upon website load.
+
 - Improve API call to allow more specific searches, and to show search results while searching.
-- allow caching or some storage of data on computer with the locations the user wants (can delete or add), and will populate with API data upon website load.
 - show specific data on the graph when cilcking a point or hovering...?
 - add a way so user can change refresh timer based on preferences.
 
