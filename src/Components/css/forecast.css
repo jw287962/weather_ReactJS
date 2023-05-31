@@ -16,6 +16,12 @@
 .hourlyforecast > .date {
   width: 100%;
   background-color: lightblue;
+  position: relative;
+}
+
+.menudown {
+  position: absolute;
+  right: 0px;
 }
 
 .min {

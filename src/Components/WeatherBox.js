@@ -51,7 +51,7 @@ function WeatherBox({ data, num }) {
         >
           <WeatherBoxData data={data}></WeatherBoxData>
           <div onClick={handleDelete} className="deleteContainer">
-            <Icon className="delete" path={mdiDelete} size={1} />
+            <Icon className="delete" path={mdiDelete} size={1.4} />
           </div>
         </Link>
       )}

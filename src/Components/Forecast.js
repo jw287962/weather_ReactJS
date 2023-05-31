@@ -16,9 +16,12 @@ import {
 } from "../utility/weather";
 
 import { useContext } from "react";
+import { useParams } from "react-router-dom";
+
+import Icon from "@mdi/react";
+import { mdiMenuDown } from "@mdi/js";
 
 import { images, imageNum } from "../utility/Images";
-import { useParams } from "react-router-dom";
 
 import "./css/forecast.css";
 
@@ -186,6 +189,7 @@ function Forecast() {
             >
               <div className="date">
                 {i === 0 ? "Today" : date[0].dt_txt.date}
+                <Icon className="menudown" path={mdiMenuDown} size={1} />
               </div>
               {toggleDate === i &&
                 date.map((timedata) => (
