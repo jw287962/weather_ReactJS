@@ -16,7 +16,7 @@ function reducer(state, action) {
       return {
         ...state,
         activeLocation: action.activeLocation,
-        locationsData: { ...action[`locationsData`], ...state.locationsData },
+        locationsData: { ...state.locationsData, ...action[`locationsData`] },
         timer: 0,
       };
     } else {

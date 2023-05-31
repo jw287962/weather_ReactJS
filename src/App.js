@@ -7,12 +7,10 @@ import { handlePermission } from "./utility/permissions";
 
 import { useContext } from "react";
 import { MyDispatch, MyState } from "./ReducerTopComponent";
-import Cookies from "universal-cookie";
 
 function App() {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
-  const cookies = new Cookies();
   const [currentLocation, setCurrentLocation] = useState("");
   function refreshDispatch(data) {
     dispatch({

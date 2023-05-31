@@ -1,6 +1,7 @@
 import App from "./App.js";
 
 import Cookies from "universal-cookie";
+import { format, fromUnixTime, addWeeks } from "date-fns";
 
 import { useReducer, createContext, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -63,7 +64,9 @@ function Reducer() {
   }, [cookieArray]);
 
   useEffect(() => {
-    cookies.set("locations", state.locations);
+    const day = addWeeks(new Date(), 1);
+
+    cookies.set("locations", state.locations, { expires: day });
   }, [state.locations]);
 
   useEffect(() => {
