@@ -1,12 +1,4 @@
 function reducer(state, action) {
-  // ...
-  // const initialState = {
-  // locations: [],
-  // activeLocation: "",
-  // toggleTime: 1,
-  // expandLocation: "",
-  // loading: true,
-  // };
   if (action.type === "timer") {
     return {
       ...state,
@@ -15,29 +7,45 @@ function reducer(state, action) {
   }
 
   if (action.type === "add_location") {
-    if (state.locationsData[action.activeLocation]) {
+    console.log(state, action);
+    if (
+      state.locationsData[action.activeLocation] ||
+      state.locations.includes(action.activeLocation)
+    ) {
+      console.log("refreshed");
       return {
         ...state,
-        locations: [...state.locations],
         activeLocation: action.activeLocation,
-        locationsData: { ...action.locationsData },
+        locationsData: { ...action[`locationsData`], ...state.locationsData },
+        timer: 0,
+      };
+    } else {
+      console.log("add location", action.activeLocation);
+      return {
+        ...state,
+        locations: [action.activeLocation, ...state.locations],
+        activeLocation: action.activeLocation,
+        locationsData: { ...action[`locationsData`] },
         timer: 0,
       };
     }
+  }
+  if (action.type === "removeLocation") {
     return {
       ...state,
-      locations: [action.activeLocation, ...state.locations],
-      activeLocation: action.activeLocation,
-      locationsData: { ...action.locationsData },
-      timer: 0,
+      locations: [action.activeLocation],
     };
   }
 
-  // if (action.type === "refresh") {
-  //   // handle duplicates!!!
+  // if (action.type === "addFromCookieLocation") {
+  //   console.log(state);
+
   //   return {
   //     ...state,
+  //     locations: [...action.locations],
+  //     activeLocation: action.activeLocation,
   //     locationsData: { ...action.locationsData },
+  //     timer: 0,
   //   };
   // }
 

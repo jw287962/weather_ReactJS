@@ -1,28 +1,75 @@
 import App from "./App.js";
 
+import Cookies from "universal-cookie";
+
 import { useReducer, createContext, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Header from "./Components/Header.js";
 import Forecast from "./Components/Forecast.js";
 import { reducer } from "./utility/Reducer.js";
+import { useState } from "react";
+import { fetchWeatherCurrent } from "./utility/weather.js";
+
 export const MyDispatch = createContext("dispatch");
 export const MyState = createContext("state");
 
+const initialState = {
+  locations: [],
+  activeLocation: "",
+  toggleTime: 1,
+  loading: true,
+  expandLocation: "",
+  locationsData: {},
+  error: "",
+  timer: 0,
+  refreshTime: 40,
+};
 function Reducer() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const cookies = new Cookies();
+
+  const [cookieArray, setCookieArray] = useState(cookies.get("locations"));
+  useEffect(() => {
+    dispatch({ type: "loading", loading: true });
+    async function updateDisplayWithCookie() {
+      console.log(true, cookieArray);
+      for (let i = 0; i < cookieArray.length; i++) {
+        const city = cookieArray[i];
+        fetchWeatherCurrent(city)
+          .then((data) => {
+            dispatch({
+              type: "add_location",
+              activeLocation: data.name,
+              locationsData: {
+                ...state.locationsData,
+                [data.name]: { ...data },
+              },
+            });
+            dispatch({ type: "error", error: "" });
+            // setError("");
+          })
+          .catch((err) => {
+            dispatch({
+              type: "error",
+              error: "Try Again: No Location Found",
+            });
+            // setError("Try Again: No Location Found");
+          });
+      }
+
+      dispatch({ type: "loading", loading: false });
+    }
+
+    updateDisplayWithCookie();
+  }, [cookieArray]);
+
+  useEffect(() => {
+    cookies.set("locations", state.locations);
+  }, [state.locations]);
+
   useEffect(() => {
     document.title = "Weather App";
-  });
-  const initialState = {
-    locations: [],
-    activeLocation: "",
-    toggleTime: 1,
-    loading: true,
-    expandLocation: "",
-    locationsData: {},
-    error: "",
-    timer: 0,
-    refreshTime: 40,
-  };
+  }, []);
+
   const router = createBrowserRouter(
     [
       {
@@ -36,9 +83,6 @@ function Reducer() {
     ],
     { basename: "/weather_ReactJS" }
   );
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
   return (
     <div>
       <MyDispatch.Provider value={dispatch}>

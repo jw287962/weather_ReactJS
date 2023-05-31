@@ -197,7 +197,7 @@ function Forecast() {
                       <div>
                         <div>{timedata.dt_txt.time}</div>
                         <div>
-                          Feel: {convertKtoF(timedata.main.feels_like)}°F
+                          RealFeel: {convertKtoF(timedata.main.feels_like)}°F
                         </div>
                         <div>
                           <span className="min">

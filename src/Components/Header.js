@@ -52,7 +52,7 @@ function Header() {
         <Link to={`/`} onClick={handleHomeClick}>
           WEATHER FORECAST
         </Link>
-        <a href="https://github.com/jw287962/weather_ReactJS">
+        <a href="https://github.com/jw287962/weather_ReactJS/tree/master">
           <svg
             height="32"
             aria-hidden="true"
@@ -69,7 +69,6 @@ function Header() {
           </svg>
         </a>
       </div>
-
       {!state.expandLocation && (
         <div className="secondaryHeaderTools">
           <form className="locationform" onSubmit={processNewLocation}>

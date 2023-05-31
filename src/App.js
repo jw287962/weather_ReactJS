@@ -1,50 +1,41 @@
 import "./App.css";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Components/Header";
 import { fetchWeatherCurrent } from "./utility/weather";
 import WeatherBox from "./Components/WeatherBox";
 import { handlePermission } from "./utility/permissions";
 
-import { reducer } from "./utility/Reducer";
-
 import { useContext } from "react";
 import { MyDispatch, MyState } from "./ReducerTopComponent";
+import Cookies from "universal-cookie";
 
 function App() {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
-  // const initialState = {
-  //   locations: [],
-  //   activeLocation: "",
-  //   toggleTime: 1,
-  //   loading: true,
-  //   expandLocation: "",
-  //   locationsData: {},
-  // };
-  // const [state, dispatch] = useReducer(reducer, initialState);
+  const cookies = new Cookies();
   const [currentLocation, setCurrentLocation] = useState("");
-  const [error, setError] = useState("");
-
+  function refreshDispatch(data) {
+    dispatch({
+      type: "add_location",
+      activeLocation: data.name,
+      locationsData: { ...state.locationsData, [data.name]: { ...data } },
+    });
+  }
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: "loading", loading: true });
       await handlePermission(setCurrentLocation);
     };
+
     dispatch({ type: "selection", expandLocation: "" });
     fetchData();
-
-    console.log(state);
   }, []);
 
   useEffect(() => {
     if (currentLocation != "") {
       fetchWeatherCurrent(currentLocation).then((data) => {
         console.log(data);
-        dispatch({
-          type: "add_location",
-          activeLocation: data.name,
-          locationsData: { ...state.locationsData, [data.name]: { ...data } },
-        });
+        refreshDispatch(data);
       });
       dispatch({ type: "loading", loading: false });
     }
@@ -57,14 +48,7 @@ function App() {
         console.log("REFRESH", city);
         fetchWeatherCurrent(city)
           .then((data) => {
-            dispatch({
-              type: "add_location",
-              activeLocation: data.name,
-              locationsData: {
-                ...state.locationsData,
-                [data.name]: { ...data },
-              },
-            });
+            refreshDispatch(data);
             dispatch({ type: "error", error: "" });
             // setError("");
           })
@@ -101,10 +85,13 @@ function App() {
         <>
           {/* <button className="refresh"></button> */}
           <div className="content"></div>
-          {state.locations.map((location, i) => {
-            const data = state.locationsData[location];
-            return <WeatherBox data={data} key={location}></WeatherBox>;
-          })}
+          {state.locations &&
+            state.locations.map((location) => {
+              const data = state.locationsData[location];
+              if (data && data.name)
+                return <WeatherBox data={data} key={location}></WeatherBox>;
+              else return null;
+            })}
         </>
       )}
 

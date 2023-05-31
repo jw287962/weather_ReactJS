@@ -45,7 +45,8 @@
 }
 
 .graph {
-  transform: scale(1.1);
+  scale: 1.1;
+  margin-bottom: 20px;
 }
 @media only screen and (max-width: 550px) {
   .graph {

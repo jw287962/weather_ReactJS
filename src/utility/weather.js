@@ -105,7 +105,6 @@ async function fetchWeatherCurrent(location = "Madison") {
       newData.description = getDescription(newData);
       newData.location = await checkLocation(newData);
 
-      console.log(newData);
       // content.textContent = "";
       return newData;
 
@@ -135,7 +134,6 @@ async function fetchWeatherCurrent(location = "Madison") {
   } catch (err) {
     throw new Error("ERROR:" + err);
   }
-  return processedData;
 }
 function getDescription(data) {
   let description = data.weather[0].description;
