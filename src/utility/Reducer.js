@@ -7,7 +7,6 @@ function reducer(state, action) {
   }
 
   if (action.type === "add_location") {
-    console.log(state, action);
     if (
       state.locationsData[action.activeLocation] ||
       state.locations.includes(action.activeLocation)
@@ -16,16 +15,16 @@ function reducer(state, action) {
       return {
         ...state,
         activeLocation: action.activeLocation,
-        locationsData: { ...state.locationsData, ...action[`locationsData`] },
+        locationsData: { ...state.locationsData, ...action.locationsData },
         timer: 0,
       };
     } else {
-      console.log("add location", action.activeLocation);
+      console.log("add_location", action.activeLocation);
       return {
         ...state,
         locations: [action.activeLocation, ...state.locations],
         activeLocation: action.activeLocation,
-        locationsData: { ...action[`locationsData`] },
+        locationsData: { ...state.locationsData, ...action.locationsData },
         timer: 0,
       };
     }
