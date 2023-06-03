@@ -31,6 +31,16 @@
   flex-direction: row;
 }
 
+.f-just-center {
+  justify-content: center;
+}
+.f-align-center {
+  align-items: center;
+}
+.flexcol {
+  display: flex;
+  flex-direction: column;
+}
 .btw {
   justify-content: space-between;
 }

@@ -29,6 +29,7 @@ body {
   margin-top: 8px;
   font-size: 40px;
 }
+
 .secondaryHeaderTools {
   font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
   font-size: 18px;
@@ -78,12 +79,17 @@ a {
   margin: 10px;
   font-size: 20px;
 }
+
+.searchArea {
+  margin-left: 3px;
+}
 #location {
   border-radius: 5px;
   border: 2px solid rgb(61, 61, 61);
   padding: 2px 5px;
 }
-/* content */
+
+/* CONTENT */
 .weatherdetails {
   min-width: 700px;
 }

@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import { MyDispatch, MyState } from "../ReducerTopComponent";
+
+import SearchList from "./SearchList";
 
 import { fetchWeatherCurrent } from "../utility/weather";
 function Header() {
@@ -14,62 +16,40 @@ function Header() {
     });
   }
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchList, setSearchList] = useState([]);
   // const [error, setError] = useState("");
   useEffect(() => {
-    if(searchTerm === ''){
+    if (searchTerm === "") {
+      setSearchList([]);
       return;
     }
-
-    
-async function findLocationList(){
-  const promiseSearchList = await fetch(
-    `http://api.openweathermap.org/geo/1.0/direct?q=` +
-      `${searchTerm}&limit=${5}&appid=${`19d6b05066109b1f4f25ae216d98acf3`}`,
-    { mode: "cors" }
-  );
-  const result = await promiseSearchList.json();
-  console.log(result);
-}
-    
-
-  const timeout = setTimeout(findLocationList,1000);
-// findLocationList();
-return(() => clearTimeout(timeout))
-  }, [searchTerm])
-
-  
-  async function processNewLocation(e) {
-    e.preventDefault();
     dispatch({ type: "loading", loading: true });
 
-    if (
-      state.locationsData[
-        `${searchTerm[0]
-          .toUpperCase()
-          .concat(searchTerm.substring(1).toLowerCase())}`
-      ] !== undefined
-    ) {
-      dispatch({ type: "error", error: "Duplicate Location" });
-      return;
+    async function findLocationList() {
+      const promiseSearchList = await fetch(
+        `http://api.openweathermap.org/geo/1.0/direct?q=` +
+          `${searchTerm}&limit=${5}&appid=${`19d6b05066109b1f4f25ae216d98acf3`}`,
+        { mode: "cors" }
+      );
+      const result = await promiseSearchList.json();
+      console.log([...result]);
+      setSearchList([...result]);
     }
-    // should show a list of locations to click before searching...
 
+    const timeout = setTimeout(findLocationList, 1000);
+    // findLocationList();
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchTerm]);
 
-    const processedData = fetchWeatherCurrent(searchTerm);
-    processedData
-      .then((data) => {
-        dispatch({
-          type: "add_location",
-          activeLocation: data.name,
-          locationsData: { ...state.locationsData, [data.name]: { ...data } },
-        });
-        dispatch({ type: "error", error: "" });
-      })
-      .catch((err) => {
-        dispatch({ type: "error", error: "Try Again: No Location Found" });
-      });
+  useEffect(() => {
+    if (searchList.length === 0 && searchTerm != "") {
+      dispatch({ type: "error", error: "Try Again: No Location Found" });
+    }
     dispatch({ type: "loading", loading: false });
-  }
+  }, [searchList]);
+
   return (
     <div className="header">
       <div>
@@ -95,16 +75,27 @@ return(() => clearTimeout(timeout))
       </div>
       {!state.expandLocation && (
         <div className="secondaryHeaderTools">
-          <form className="locationform" onSubmit={processNewLocation}>
-            <label htmlFor="location">LOCATION: </label>
-            <input
-              type="search"
-              id="location"
-              name="location"
-              placeholder="Search by City Name"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <form className="locationform">
+            <div className="flexcol f-align-center ">
+              <label htmlFor="location">LOCATION: </label>
+              <div className="searchArea flexcol">
+                <input
+                  type="search"
+                  id="location"
+                  name="location"
+                  placeholder="Search by City Name"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                {searchList.map((ele, i) => (
+                  <SearchList
+                    location={ele}
+                    setSearchTerm={setSearchTerm}
+                    key={i}
+                  ></SearchList>
+                ))}
+              </div>
+            </div>
 
             <div className="loading">
               {state.error ? `${state.error}` : ""}

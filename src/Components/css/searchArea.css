@@ -1,0 +1,11 @@
+.searchArea {
+  width: fit-content;
+  min-width: 250px;
+}
+
+.searchList {
+  min-height: 25px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+}
