@@ -11,7 +11,7 @@ function reducer(state, action) {
       state.locationsData[action.activeLocation] ||
       state.locations.includes(action.activeLocation)
     ) {
-      console.log("refreshed");
+      console.log("refreshed location");
       return {
         ...state,
         activeLocation: action.activeLocation,

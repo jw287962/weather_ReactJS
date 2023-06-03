@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { useContext, useState } from "react";
+import { useContext, useState,useEffect } from "react";
 
 import { MyDispatch, MyState } from "../ReducerTopComponent";
 
@@ -15,12 +15,33 @@ function Header() {
   }
   const [searchTerm, setSearchTerm] = useState("");
   // const [error, setError] = useState("");
+  useEffect(() => {
+    if(searchTerm === ''){
+      return;
+    }
 
-  function processNewLocation(e) {
+    
+async function findLocationList(){
+  const promiseSearchList = await fetch(
+    `http://api.openweathermap.org/geo/1.0/direct?q=` +
+      `${searchTerm}&limit=${5}&appid=${`19d6b05066109b1f4f25ae216d98acf3`}`,
+    { mode: "cors" }
+  );
+  const result = await promiseSearchList.json();
+  console.log(result);
+}
+    
+
+  const timeout = setTimeout(findLocationList,1000);
+// findLocationList();
+return(() => clearTimeout(timeout))
+  }, [searchTerm])
+
+  
+  async function processNewLocation(e) {
     e.preventDefault();
     dispatch({ type: "loading", loading: true });
 
-    console.log();
     if (
       state.locationsData[
         `${searchTerm[0]
@@ -31,6 +52,8 @@ function Header() {
       dispatch({ type: "error", error: "Duplicate Location" });
       return;
     }
+    // should show a list of locations to click before searching...
+
 
     const processedData = fetchWeatherCurrent(searchTerm);
     processedData
