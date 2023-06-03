@@ -75,7 +75,7 @@ function Header() {
       </div>
       {!state.expandLocation && (
         <div className="secondaryHeaderTools">
-          <form className="locationform">
+          <form className="locationform" onSubmit={(e) => e.preventDefault()}>
             <div className="flexcol f-align-center ">
               <label htmlFor="location">LOCATION: </label>
               <div className="searchArea flexcol">

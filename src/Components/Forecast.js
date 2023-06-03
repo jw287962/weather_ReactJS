@@ -51,8 +51,6 @@ function Forecast() {
   async function checkNoData() {
     if (state && state.expandLocation === "") {
       const data = await fetchWeatherCurrent(id);
-      // console.log(state);
-      // console.log(data);
 
       dispatch({
         type: "add_location",
@@ -124,22 +122,6 @@ function Forecast() {
       clearInterval(timer);
     };
   }, [state]);
-  function processAMPM(string) {
-    // console.log(string);
-    const num = string * 1;
-
-    if (num > 11) {
-      if (num === 12) {
-        return num + " PM";
-      }
-      return num - 12 + " PM";
-    } else {
-      if (num === 0) {
-        return num + 12 + " AM";
-      }
-      return num + " AM";
-    }
-  }
 
   return (
     <div>
@@ -157,7 +139,7 @@ function Forecast() {
               return null;
             }
             return (
-              <div className="day" key={day.day}>
+              <div className="day" key={`${day.day}${i}`}>
                 <div className="date">{day.day}</div>
                 <img src={images[imageNum(day.description)]}></img>
                 <div className="temperature">
@@ -192,11 +174,11 @@ function Forecast() {
                 <Icon className="menudown" path={mdiMenuDown} size={1} />
               </div>
               {toggleDate === i &&
-                date.map((timedata) => (
+                date.map((timedata, i) => (
                   <>
                     <div
                       className={`hourlyforecastmini ${timedata.dt_txt.date}`}
-                      key={`${timedata.dt_txt.date}${timedata.dt_txt.time}`}
+                      key={`${timedata.dt_txt.time},${i}`}
                     >
                       <div>
                         <div>{timedata.dt_txt.time}</div>

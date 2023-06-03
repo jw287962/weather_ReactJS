@@ -65,6 +65,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                       <text
                         x={25 + (counter / 9) * graphWidth}
                         y={graphHeight + 25}
+                        key={`x-axis,${counter}`}
                       >
                         {data.dt_txt.time.substring(
                           0,
@@ -115,6 +116,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                             (counter * ((maxTemp - minTemp) / 6))) /
                             (maxTemp - minTemp)
                         }
+                        key={`y-axis,${counter}`}
                       >
                         {minTemp + counter * 10} °F
                       </text>
@@ -170,6 +172,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                         data-value={convertKtoF(data.main.temp)}
                         r="4"
                         onMouseOver={handleMouseOver}
+                        key={`dataPoints,${counter}`}
                       >
                         {convertKtoF(data.main.temp)}
                       </circle>
