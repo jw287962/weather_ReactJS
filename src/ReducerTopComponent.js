@@ -32,29 +32,34 @@ function Reducer() {
   useEffect(() => {
     dispatch({ type: "loading", loading: true });
     async function updateDisplayWithCookie() {
-      console.log(true, cookieArray);
-      for (let i = 0; i < cookieArray.length; i++) {
-        const city = cookieArray[i];
-        fetchWeatherCurrent(city)
-          .then((data) => {
-            dispatch({
-              type: "add_location",
-              activeLocation: data.name,
-              locationsData: {
-                [data.name]: { ...data },
-              },
-            });
-            dispatch({ type: "error", error: "" });
-            // setError("");
-          })
-          .catch((err) => {
-            dispatch({
-              type: "error",
-              error: "Try Again: No Location Found",
-            });
-            // setError("Try Again: No Location Found");
-          });
+      // console.log(true, cookieArray);
+
+      if (cookieArray === undefined) {
+        return;
       }
+      if (cookieArray)
+        for (let i = 0; i < cookieArray.length; i++) {
+          const city = cookieArray[i];
+          fetchWeatherCurrent(city)
+            .then((data) => {
+              dispatch({
+                type: "add_location",
+                activeLocation: data.name,
+                locationsData: {
+                  [data.name]: { ...data },
+                },
+              });
+              dispatch({ type: "error", error: "" });
+              // setError("");
+            })
+            .catch((err) => {
+              dispatch({
+                type: "error",
+                error: "Try Again: No Location Found",
+              });
+              // setError("Try Again: No Location Found");
+            });
+        }
 
       dispatch({ type: "loading", loading: false });
     }
