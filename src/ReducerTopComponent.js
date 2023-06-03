@@ -65,7 +65,10 @@ function Reducer() {
   useEffect(() => {
     const day = addWeeks(new Date(), 1);
 
-    cookies.set("locations", state.locations, { expires: day });
+    cookies.set("locations", state.locations, {
+      expires: day,
+      path: "/weather_ReactJS",
+    });
   }, [state.locations]);
 
   useEffect(() => {
