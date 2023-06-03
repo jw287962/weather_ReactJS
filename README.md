@@ -32,6 +32,7 @@ Current:
 - add a way so user can change refresh timer based on preferences.
 
 - store locations with State or Country included in object name to allow two or more cities with the same city name
+- in depth detail should grab correct location instead of a random Madison city if there are more than one same city name
 
 ## Reminders
 
