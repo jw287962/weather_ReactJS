@@ -49,7 +49,11 @@ function Forecast() {
     });
   }
   async function checkNoData() {
-    if (state && state.expandLocation === "") {
+    console.log(state, state.expandLocation);
+    if (
+      state &&
+      (state.expandLocation === "" || state.expandLocation === undefined)
+    ) {
       const data = await fetchWeatherCurrent(id);
 
       dispatch({
