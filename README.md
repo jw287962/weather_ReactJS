@@ -3,6 +3,10 @@
 ## HOW TO USE:
 
 1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOUR CURRENT LOCATIONS WEATHER DATA)
+
+- Search Locations will display real and relevant locations (once user stops typing for 1 second)
+- Click a displayed loation and it will load the data for the location.
+
 2.  CLICK THE WEATHER CARD TO GET INDEPTH DETAILS. click Title to return back to home page
 
 ## VIA OpenweatherAPI
@@ -15,15 +19,19 @@ Current:
 - v1.2 Improved location details to include 5 day forecast and 24 hour graph
 - v1.3
   - Uses Cookies to remember added location
-  - Remove Locations Support
+- v1.4 Search Locations will display real and relevant locations (once user stops typing for 1 second)
+  - Click and it will load the data for the location.
 
 ## Future/Improvements:
 
 (✓) allow caching or some storage of data on computer with the locations the user wants (can delete or add), and will populate with API data upon website load.
 
-- Improve API call to allow more specific searches, and to show search results while searching.
+(✓) Improve API call to allow more specific searches, and to show search results while searching.
+
 - show specific data on the graph when cilcking a point or hovering...?
 - add a way so user can change refresh timer based on preferences.
+
+- store locations with State or Country included in object name to allow two or more cities with the same city name
 
 ## Reminders
 
