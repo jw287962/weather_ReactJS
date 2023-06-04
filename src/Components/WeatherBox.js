@@ -20,6 +20,11 @@ function WeatherBox({ data, num }) {
       type: "selection",
       expandLocation: e.target.dataset.location,
     });
+
+    dispatch({
+      type: "error",
+      error: "",
+    });
   }
   function handleDelete(e) {
     e.preventDefault();
