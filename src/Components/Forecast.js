@@ -36,7 +36,6 @@ function Forecast() {
 
   const { id } = useParams();
   const [data, setData] = useState();
-
   async function updateData() {
     const data = await fetchWeatherCurrent(id, true);
     dispatch({

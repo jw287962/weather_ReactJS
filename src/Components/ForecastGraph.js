@@ -1,30 +1,52 @@
 import "./css/forecastGraph.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { convertKtoF, findMin } from "../utility/weather";
 function ForcastGraph({ organizedForecast, dailyGraphData }) {
-  const width = document.querySelector(".graph")?.clientWidth || 450;
+  const width = document.querySelector(".graph")?.clientWidth || 500;
   const height = document.querySelector(".graph")?.clientHeight || 300;
+  
   const graphHeight = height - 50;
   const graphWidth = width - 70;
   let counter = 0;
 
   let minTemp = 150;
   let maxTemp = 0;
+  const distFromLeftEdge = useRef();
+  const resized = useRef(true);
+  const [horizontalValue, setHorizontalValue] = useState(0);
+  window.addEventListener("resize", () => {
+    resized.current = true;
+  });
+  function handleHover(e) {
+    if (resized.current) {
+      const svg = document.querySelector(".graph");
+      distFromLeftEdge.current = svg.getBoundingClientRect().x;
+      resized.current = false;
+    }
 
-  function handleMouseOver(e) {
-    console.log(e);
+    let currentXOnSVG = e.clientX - distFromLeftEdge.current - 35;
+    if (currentXOnSVG >= width / 2) {
+      // currentXOnSVG -= 80;
+    }
+    currentXOnSVG = Math.max(70, currentXOnSVG);
+    currentXOnSVG = Math.min(graphWidth - 10, currentXOnSVG);
+
+    setHorizontalValue(currentXOnSVG);
   }
 
+  function handleLeave(e) {
+    setHorizontalValue(0);
+  }
   useEffect(() => {
-    const array = [];
     // hourlyForecast.forEach((elem) => {
     //   for(let i = 0; i <elem.length;i++){
     //   array.push(elem)
     //   }
-
     // })
   }, [organizedForecast]);
+
+  // useEffect(() => {}, [height]);
   return (
     // 500 x 800 size
     <svg
@@ -32,12 +54,14 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       xmlns="http://www.w3.org/2000/svg"
       className="graph"
       aria-labelledby="title"
-      role="img"
+      // role="img"
       height={height}
       width={width}
+      onMouseMove={handleHover}
+      onMouseLeave={handleLeave}
       // transform=""
     >
-      <title id="title">Weather Next 24 Hrs </title>
+      {/* <title id="title">Weather Next 24 Hrs </title> */}
       {organizedForecast && (
         <>
           <g className="grid x-grid" id="xGrid">
@@ -71,11 +95,10 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                           0,
                           data.dt_txt.time.indexOf(":")
                         )}
-                   
-                          {data.dt_txt.time.substring(
-                            data.dt_txt.time.indexOf("M") - 2
-                          )}
-                
+
+                        {data.dt_txt.time.substring(
+                          data.dt_txt.time.indexOf("M") - 2
+                        )}
                       </text>
                       <line
                         x1={(counter / 9) * graphWidth}
@@ -173,7 +196,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                         }
                         data-value={convertKtoF(data.main.temp)}
                         r="4"
-                        onMouseOver={handleMouseOver}
                         key={`dataPoints,${counter}`}
                       >
                         {convertKtoF(data.main.temp)}
@@ -196,6 +218,21 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             );
           })}
       </g>
+
+      {horizontalValue && (
+        <g>
+          <rect
+            x={horizontalValue}
+            y="20"
+            width="80"
+            height="20"
+            className="rectangleData"
+          ></rect>
+          <text x={horizontalValue} y="35">
+            Hello
+          </text>
+        </g>
+      )}
     </svg>
   );
 }

@@ -79,7 +79,7 @@ function Header() {
           <form
             className="locationform"
             onSubmit={(e) => e.preventDefault()}
-            autocomplete="off"
+            autoComplete="off"
           >
             <div className="flexcol f-align-center ">
               <label htmlFor="location">LOCATION: </label>

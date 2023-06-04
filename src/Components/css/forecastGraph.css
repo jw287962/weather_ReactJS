@@ -45,18 +45,21 @@
 }
 
 .graph {
-  scale: 1.1;
+  /* scale: 1.1; */
   margin-bottom: 20px;
-  width: 450px;
+  width: 500px;
   height: 300px;
 }
 
+.rectangleData {
+  stroke: black;
+  fill: none;
+}
 @media only screen and (max-width: 700px) {
   .graphContainer {
     overflow: visible;
   }
   .graph {
-    transform: translateX(-15px) scale(1);
   }
 }
 @media only screen and (max-width: 550px) {
@@ -65,21 +68,18 @@
   } */
   .graph {
     width: 420px;
-    transform: translateX(-15px) scale(1);
   }
 }
 
 @media only screen and (max-width: 480px) {
   .graph {
     width: 400px;
-    transform: scale(1);
   }
 }
 
 @media only screen and (max-width: 400px) {
   .graph {
     width: 380px;
-    transform: translateX(-15px) scale(1);
   }
   .y-labels,
   .x-labels {
