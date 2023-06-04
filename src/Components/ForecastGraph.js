@@ -28,10 +28,14 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     }
 
     let currentXOnSVG = e.clientX - distFromLeftEdge.current - 35;
-    currentXOnSVG = Math.max(70, currentXOnSVG);
-    currentXOnSVG = Math.min(graphWidth - 10, currentXOnSVG);
 
     setHorizontalValue(currentXOnSVG);
+  }
+
+  function limitHorizontalValue(currentXOnSVG) {
+    currentXOnSVG = Math.max(70, currentXOnSVG);
+    currentXOnSVG = Math.min(graphWidth - 10, currentXOnSVG);
+    return currentXOnSVG;
   }
 
   function handleLeave(e) {
@@ -203,20 +207,20 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       {horizontalValue && (
         <g>
           <rect
-            x={horizontalValue}
+            x={limitHorizontalValue(horizontalValue)}
             y="20"
             width="80"
             height="20"
             className="rectangleData"
           ></rect>
-          <text x={horizontalValue} y="35">
+          <text x={limitHorizontalValue(horizontalValue)} y="35">
             Hello
           </text>
           <line
             className="dottedgrid"
-            x1={horizontalValue + 35}
+            x1={Math.max(horizontalValue + 35, 70)}
             y1="0"
-            x2={horizontalValue + 35}
+            x2={Math.max(horizontalValue + 35, 70)}
             y2={graphHeight}
           ></line>
         </g>
