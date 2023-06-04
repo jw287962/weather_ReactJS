@@ -211,7 +211,7 @@ button:active {
 }
 @media only screen and (max-width: 700px) {
   :root {
-    --minwidth: min(600px, 98vw);
+    --minwidth: 98vw;
   }
   body {
     margin: 0px;
@@ -230,28 +230,34 @@ button:active {
 }
 @media only screen and (max-width: 550px) {
   .header {
+    text-align: center;
+
     font-size: 30px;
   }
   :root {
-    --minwidth: max(320px, 95vw);
+    --minwidth: 98vw;
   }
-  .weatherdetails {
-    /* min-width: 420px; */
-  }
+
   .forecast {
-    overflow-x: scroll;
     scroll-behavior: smooth;
     overflow: hidden;
+    overflow-x: scroll;
+
     text-align: center;
   }
-  body {
-    /* min-width: 400px; */
+  body > div > div > div {
+    align-items: normal;
   }
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 400px) {
   :root {
-    --minwidth: min(320px, 99vw);
+    --minwidth: 99vw;
+  }
+  body {
+  }
+  .weatherdetails {
+    padding: 10px 0px;
   }
   .day,
   .temperature {
@@ -262,12 +268,9 @@ button:active {
     margin-right: -5px;
   }
   .forecast {
-    overflow-x: scroll;
     scroll-behavior: smooth;
     justify-content: center;
     overflow: hidden;
-  }
-  .graphDataExcel {
-    min-width: min(380px);
+    overflow-x: scroll;
   }
 }
