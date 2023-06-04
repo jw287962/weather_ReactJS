@@ -233,7 +233,7 @@ button:active {
     font-size: 30px;
   }
   :root {
-    --minwidth: min(450px, 99vw);
+    --minwidth: max(320px, 95vw);
   }
   .weatherdetails {
     /* min-width: 420px; */
@@ -266,5 +266,8 @@ button:active {
     scroll-behavior: smooth;
     justify-content: center;
     overflow: hidden;
+  }
+  .graphDataExcel {
+    min-width: min(380px);
   }
 }
