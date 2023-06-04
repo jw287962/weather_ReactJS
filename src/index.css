@@ -3,6 +3,9 @@ code {
     monospace;
 }
 
+:root {
+  --minwidth: 700px;
+}
 @font-face {
   font-family: IndieFlowerRegular;
   src: url("./asset/IndieFlower-Regular.ttf");
@@ -21,6 +24,12 @@ body {
   font-family: IndieFlowerRegular, Arial, Helvetica, sans-serif;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+body > div > div > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 
@@ -62,7 +71,7 @@ a {
   color: black;
 }
 .content {
-  min-width: 700px;
+  min-width: var(--minwidth);
 }
 .refresh {
   background-color: white;
@@ -89,8 +98,13 @@ a {
 }
 
 /* CONTENT */
-.weatherdetails {
-  min-width: 700px;
+.weatherdetails,
+.forecast,
+.graphContainer,
+.graphDataExcel {
+  min-width: var(--minwidth);
+  /* max-width: 800px; */
+  max-width: max(800px, 80vw);
 }
 .weatherdetails {
   position: relative;
@@ -196,49 +210,61 @@ button:active {
     1px 1px 0 #000;
 }
 @media only screen and (max-width: 700px) {
+  :root {
+    --minwidth: min(600px, 98vw);
+  }
   body {
     margin: 0px;
-  }
-  .header {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
   }
 
   .header > div,
   .header > div > a {
     margin: 5px;
   }
-  .content {
-    min-width: auto;
-    width: 98vw;
-  }
-  .forecast {
-    overflow-y: scroll;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    min-width: auto;
-    max-width: 700px;
-  }
+
   .weatherdetails {
     flex-direction: column;
-    max-width: 98vw;
-    min-width: auto;
+    /* max-width: 98vw; */
     margin: 0px;
   }
 }
 @media only screen and (max-width: 550px) {
+  .header {
+    font-size: 30px;
+  }
+  :root {
+    --minwidth: min(450px, 99vw);
+  }
   .weatherdetails {
-    min-width: 420px;
+    /* min-width: 420px; */
   }
   .forecast {
     overflow-x: scroll;
     scroll-behavior: smooth;
-    min-width: 400px;
     overflow: hidden;
     text-align: center;
   }
   body {
-    min-width: 400px;
+    /* min-width: 400px; */
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  :root {
+    --minwidth: min(320px, 99vw);
+  }
+  .day,
+  .temperature {
+    font-size: 20px;
+  }
+  .day {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+  .forecast {
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    justify-content: center;
+    overflow: hidden;
   }
 }

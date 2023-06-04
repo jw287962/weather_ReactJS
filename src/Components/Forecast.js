@@ -168,7 +168,7 @@ function Forecast() {
         ></ForcastGraph>
       </div>
       {organizedForecast && (
-        <div>
+        <div className="graphDataExcel">
           {organizedForecast.map((date, i) => (
             <div
               className="hourlyforecast"
@@ -190,7 +190,8 @@ function Forecast() {
                       <div>
                         <div>{timedata.dt_txt.time}</div>
                         <div>
-                          RealFeel: {convertKtoF(timedata.main.feels_like)}°F
+                          {" "}
+                          <strong>{convertKtoF(timedata.main.temp)}°F</strong>
                         </div>
                         <div>
                           <span className="min">

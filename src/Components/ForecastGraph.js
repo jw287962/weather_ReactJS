@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 
 import { convertKtoF, findMin } from "../utility/weather";
 function ForcastGraph({ organizedForecast, dailyGraphData }) {
-  const width = 450;
-  const height = 300;
+  const width = document.querySelector(".graph")?.clientWidth || 450;
+  const height = document.querySelector(".graph")?.clientHeight || 300;
   const graphHeight = height - 50;
   const graphWidth = width - 70;
   let counter = 0;
@@ -70,10 +70,12 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                         {data.dt_txt.time.substring(
                           0,
                           data.dt_txt.time.indexOf(":")
-                        ) +
-                          data.dt_txt.time.substring(
+                        )}
+                   
+                          {data.dt_txt.time.substring(
                             data.dt_txt.time.indexOf("M") - 2
                           )}
+                
                       </text>
                       <line
                         x1={(counter / 9) * graphWidth}
@@ -157,11 +159,11 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             return (
               <>
                 {ele.map((data) => {
-                  if (counter > 9) return null;
+                  if (counter >= 9) return null;
                   counter++;
 
                   return (
-                    < >
+                    <>
                       <circle
                         cx={33 + (counter / 9) * graphWidth}
                         cy={
