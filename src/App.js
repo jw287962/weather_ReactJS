@@ -51,7 +51,7 @@ function App() {
             // setError("");
           })
           .catch((err) => {
-            dispatch({ type: "error", error: "Try Again: No Location Found" });
+            dispatch({ type: "error", error: "Refresh Error" });
             // setError("Try Again: No Location Found");
           });
       });

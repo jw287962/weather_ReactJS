@@ -46,6 +46,7 @@ function Header() {
   useEffect(() => {
     if (searchList.length === 0 && searchTerm != "") {
       dispatch({ type: "error", error: "Try Again: No Location Found" });
+      console.log("error searching");
     }
     dispatch({ type: "loading", loading: false });
   }, [searchList]);
@@ -75,7 +76,11 @@ function Header() {
       </div>
       {!state.expandLocation && (
         <div className="secondaryHeaderTools">
-          <form className="locationform" onSubmit={(e) => e.preventDefault()}>
+          <form
+            className="locationform"
+            onSubmit={(e) => e.preventDefault()}
+            autocomplete="off"
+          >
             <div className="flexcol f-align-center ">
               <label htmlFor="location">LOCATION: </label>
               <div className="searchArea flexcol">

@@ -11,7 +11,6 @@ function reducer(state, action) {
       state.locationsData[action.activeLocation] ||
       state.locations.includes(action.activeLocation)
     ) {
-      console.log("refreshed location");
       return {
         ...state,
         activeLocation: action.activeLocation,
@@ -19,7 +18,6 @@ function reducer(state, action) {
         timer: 0,
       };
     } else {
-      console.log("add_location", action.activeLocation);
       return {
         ...state,
         locations: [action.activeLocation, ...state.locations],
@@ -30,7 +28,6 @@ function reducer(state, action) {
     }
   }
   if (action.type === "removeLocation") {
-    console.log(state);
     return {
       ...state,
       locations: [...state.locations],
@@ -46,9 +43,16 @@ function reducer(state, action) {
     };
   }
   if (action.type === "loading") {
+    if (action.loading === false) {
+      return {
+        ...state,
+        loading: action.loading,
+      };
+    }
     return {
       ...state,
       loading: action.loading,
+      error: "",
     };
   }
 
