@@ -8,7 +8,8 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
 
   const graphHeight = height - 50;
   const graphWidth = width - 70;
-  let counter = 0;
+  const pointDiff = graphWidth / 9;
+  const [currentPoint, setCurrentPoint] = useState(0);
 
   let minTemp = 150;
   let maxTemp = 0;
@@ -29,6 +30,9 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
 
     let currentXOnSVG = e.clientX - distFromLeftEdge.current - 35;
 
+    setCurrentPoint(Math.round(currentXOnSVG / pointDiff) - 1);
+    console.log(currentPoint);
+
     setHorizontalValue(currentXOnSVG);
   }
 
@@ -40,6 +44,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
 
   function handleLeave(e) {
     setHorizontalValue(0);
+    setCurrentPoint(0);
   }
   useEffect(() => {
     // setCurrentDay([data]);
@@ -60,7 +65,9 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setCurrentDay(dataPoints);
   }, [organizedForecast, dailyGraphData]);
 
-  useEffect(() => {}, [currentDay]);
+  useEffect(() => {
+    console.log(currentDay);
+  }, [currentDay]);
 
   // useEffect(() => {}, [height]);
   return (
@@ -209,13 +216,18 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
           <rect
             x={limitHorizontalValue(horizontalValue)}
             y="20"
-            width="80"
+            width="120"
             height="20"
             className="rectangleData"
           ></rect>
-          <text x={limitHorizontalValue(horizontalValue)} y="35">
-            Hello
-          </text>
+          {currentPoint >= 0 && (
+            <text x={limitHorizontalValue(horizontalValue)} y="35">
+              {currentDay &&
+                currentDay.length > 0 &&
+                currentDay[`${Math.min(currentPoint, 8)}`].weather[0]
+                  .description}
+            </text>
+          )}
           <line
             className="dottedgrid"
             x1={Math.max(horizontalValue + 35, 70)}
