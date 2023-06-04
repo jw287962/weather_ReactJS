@@ -234,9 +234,6 @@ button:active {
 
     font-size: 30px;
   }
-  :root {
-    --minwidth: 98vw;
-  }
 
   .forecast {
     scroll-behavior: smooth;
@@ -251,9 +248,6 @@ button:active {
 }
 
 @media only screen and (max-width: 400px) {
-  :root {
-    --minwidth: 99vw;
-  }
   body {
   }
   .weatherdetails {

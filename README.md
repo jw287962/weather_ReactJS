@@ -13,7 +13,7 @@
 
 Current:
 
-- To create working prototype, did the basic api call that accepts CITY LOOKUP (and works with location settings on). (The current CITY lookup APi seems to sometimes call the larger nearby city data instead).
+- Search (or/and location based) to grab city data. (Click card to get more details)
 - can add multiple cards each holding a different location to navigate into for more detailsw
 - v1.1 Has timer since last refresh, should update every 40 seconds....
 - v1.2 Improved location details to include 5 day forecast and 24 hour graph
@@ -21,6 +21,9 @@ Current:
   - Uses Cookies to remember added location
 - v1.4 Search Locations will display real and relevant locations (once user stops typing for 1 second)
   - Click and it will load the data for the location.
+- v1.5 Implements media queries for mobile view 
+
+
 
 ## Future/Improvements:
 
@@ -28,10 +31,12 @@ Current:
 
 (✓) Improve API call to allow more specific searches, and to show search results while searching.
 
-- show specific data on the graph when cilcking a point or hovering...?
+- show specific data on the graph when cilcking a point or hovering...?..
+  - should put an element that displays details around mouse when it is close to the point
 - add a way so user can change refresh timer based on preferences.
 
-- store locations with State or Country included in object name to allow two or more cities with the same city name
+(✓)utilizes unique naming system by keeping track of lat and long instead of city name that can overlap with other cities
+
 - in depth detail should grab correct location instead of a random Madison city if there are more than one same city name
 
 ## Reminders
