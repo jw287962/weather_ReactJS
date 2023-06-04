@@ -5,7 +5,7 @@ import { convertKtoF, findMin } from "../utility/weather";
 function ForcastGraph({ organizedForecast, dailyGraphData }) {
   const width = document.querySelector(".graph")?.clientWidth || 500;
   const height = document.querySelector(".graph")?.clientHeight || 300;
-  
+
   const graphHeight = height - 50;
   const graphWidth = width - 70;
   let counter = 0;
@@ -15,6 +15,8 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
   const distFromLeftEdge = useRef();
   const resized = useRef(true);
   const [horizontalValue, setHorizontalValue] = useState(0);
+  const [currentDay, setCurrentDay] = useState([]);
+
   window.addEventListener("resize", () => {
     resized.current = true;
   });
@@ -39,12 +41,27 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setHorizontalValue(0);
   }
   useEffect(() => {
-    // hourlyForecast.forEach((elem) => {
-    //   for(let i = 0; i <elem.length;i++){
-    //   array.push(elem)
-    //   }
-    // })
-  }, [organizedForecast]);
+    // setCurrentDay([data]);
+    const dataPoints = [];
+    let count = 0;
+    if (Array.isArray(organizedForecast)) {
+      organizedForecast.map((ele, j) => {
+        if (dailyGraphData > j) {
+          return null;
+        }
+        ele.map((data) => {
+          if (count > 8) return null;
+          count++;
+          dataPoints.push(data);
+        });
+      });
+    }
+    setCurrentDay(...dataPoints);
+  }, [organizedForecast, dailyGraphData]);
+
+  useEffect(() => {
+    console.log(currentDay);
+  }, [currentDay]);
 
   // useEffect(() => {}, [height]);
   return (
@@ -84,6 +101,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   counter++;
                   if (counter > 9) return null;
                   minTemp = findMin(convertKtoF(data.main.temp) - 10, minTemp);
+
                   return (
                     <>
                       <text
@@ -131,6 +149,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   if (counter >= 7) return null;
                   counter++;
                   maxTemp = minTemp + 60;
+
                   return (
                     <>
                       <text
@@ -182,7 +201,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             return (
               <>
                 {ele.map((data) => {
-                  if (counter >= 9) return null;
+                  if (counter > 9) return null;
                   counter++;
 
                   return (
@@ -231,6 +250,13 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
           <text x={horizontalValue} y="35">
             Hello
           </text>
+          <line
+            className="dottedgrid"
+            x1={horizontalValue + 35}
+            y1="0"
+            x2={horizontalValue + 35}
+            y2={graphHeight}
+          ></line>
         </g>
       )}
     </svg>
