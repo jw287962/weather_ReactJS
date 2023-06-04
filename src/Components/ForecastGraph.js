@@ -28,9 +28,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     }
 
     let currentXOnSVG = e.clientX - distFromLeftEdge.current - 35;
-    if (currentXOnSVG >= width / 2) {
-      // currentXOnSVG -= 80;
-    }
     currentXOnSVG = Math.max(70, currentXOnSVG);
     currentXOnSVG = Math.min(graphWidth - 10, currentXOnSVG);
 
@@ -56,12 +53,10 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
         });
       });
     }
-    setCurrentDay(...dataPoints);
+    setCurrentDay(dataPoints);
   }, [organizedForecast, dailyGraphData]);
 
-  useEffect(() => {
-    console.log(currentDay);
-  }, [currentDay]);
+  useEffect(() => {}, [currentDay]);
 
   // useEffect(() => {}, [height]);
   return (
@@ -90,46 +85,34 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
         </>
       )}
       <g className="labels x-labels">
-        {organizedForecast &&
-          organizedForecast.map((ele, j) => {
-            if (dailyGraphData > j) {
-              return null;
-            }
+        {currentDay &&
+          currentDay.length > 0 &&
+          currentDay.map((data, i) => {
+            minTemp = findMin(convertKtoF(data.main.temp) - 10, minTemp);
+
             return (
               <>
-                {ele.map((data) => {
-                  counter++;
-                  if (counter > 9) return null;
-                  minTemp = findMin(convertKtoF(data.main.temp) - 10, minTemp);
+                <text
+                  x={25 + ((i + 1) / 9) * graphWidth}
+                  y={graphHeight + 25}
+                  key={`x-axis,${i + 1}`}
+                >
+                  {data.dt_txt.time.substring(0, data.dt_txt.time.indexOf(":"))}
 
-                  return (
-                    <>
-                      <text
-                        x={25 + (counter / 9) * graphWidth}
-                        y={graphHeight + 25}
-                        key={`x-axis,${counter}`}
-                      >
-                        {data.dt_txt.time.substring(
-                          0,
-                          data.dt_txt.time.indexOf(":")
-                        )}
-
-                        {data.dt_txt.time.substring(
-                          data.dt_txt.time.indexOf("M") - 2
-                        )}
-                      </text>
-                      <line
-                        x1={(counter / 9) * graphWidth}
-                        x2={width}
-                        y1={graphHeight + 25}
-                        y2={graphHeight + 25}
-                      ></line>
-                    </>
-                  );
-                })}
+                  {data.dt_txt.time.substring(
+                    data.dt_txt.time.indexOf("M") - 2
+                  )}
+                </text>
+                <line
+                  x1={((i + 1) / 9) * graphWidth}
+                  x2={width}
+                  y1={graphHeight + 25}
+                  y2={graphHeight + 25}
+                ></line>
               </>
             );
           })}
+
         {/* <text x="100" y="400">
           2008
         </text>
