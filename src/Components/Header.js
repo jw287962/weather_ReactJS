@@ -27,7 +27,7 @@ function Header() {
 
     async function findLocationList() {
       const promiseSearchList = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=` +
+        `https://api.openweathermap.org/geo/1.0/direct?q=` +
           `${searchTerm}&limit=${5}&appid=${`19d6b05066109b1f4f25ae216d98acf3`}`,
         { mode: "cors" }
       );
