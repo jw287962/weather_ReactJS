@@ -7,7 +7,6 @@ function reducer(state, action) {
   }
 
   if (action.type === "add_location") {
-    console.log(state);
     if (
       state.locationsData[action.activeLocation] ||
       state.locations.includes(action.activeLocation)
@@ -66,6 +65,5 @@ function reducer(state, action) {
     };
   }
 }
-
 
 export { reducer };

@@ -49,7 +49,6 @@ function Forecast() {
     });
   }
   async function checkNoData() {
-    console.log(state, state.expandLocation);
     if (
       state &&
       (state.expandLocation === "" || state.expandLocation === undefined)

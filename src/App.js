@@ -13,7 +13,6 @@ function App() {
   const state = useContext(MyState);
   const [currentLocation, setCurrentLocation] = useState("");
   function refreshDispatch(data) {
-    console.log(data);
     dispatch({
       type: "add_location",
       activeLocation: `${data.coord.lat},${data.coord.lon}`,
@@ -45,7 +44,7 @@ function App() {
       console.log(state);
       state.locations.forEach((city) => {
         console.log("REFRESH", city);
-        fetchWeatherCurrent(city,true)
+        fetchWeatherCurrent(city, true)
           .then((data) => {
             refreshDispatch(data);
             dispatch({ type: "error", error: "" });
