@@ -120,102 +120,81 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
         <text x={width / 2} y={height} className="label-title"></text>
       </g>
       <g className="labels y-labels">
-        {(counter = 0)}
-        {organizedForecast &&
-          organizedForecast.map((ele, j) => {
-            if (dailyGraphData > j) {
-              return null;
-            }
+        {currentDay &&
+          currentDay.length > 0 &&
+          currentDay.map((data, i) => {
+            const counter = i + 1;
+            maxTemp = minTemp + 60;
+
             return (
               <>
-                {ele.map(() => {
-                  if (counter >= 7) return null;
-                  counter++;
-                  maxTemp = minTemp + 60;
+                <text
+                  x="50"
+                  y={
+                    graphHeight -
+                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                      (maxTemp - minTemp)
+                  }
+                  key={`y-axis,${counter}`}
+                >
+                  {minTemp + counter * 10} °F
+                </text>
 
-                  return (
-                    <>
-                      <text
-                        x="50"
-                        y={
-                          graphHeight -
-                          (graphHeight *
-                            (counter * ((maxTemp - minTemp) / 6))) /
-                            (maxTemp - minTemp)
-                        }
-                        key={`y-axis,${counter}`}
-                      >
-                        {minTemp + counter * 10} °F
-                      </text>
-
-                      <line
-                        className="dottedgrid"
-                        x1="70"
-                        x2={width}
-                        y1={
-                          graphHeight -
-                          (graphHeight *
-                            (counter * ((maxTemp - minTemp) / 6))) /
-                            (maxTemp - minTemp)
-                        }
-                        y2={
-                          graphHeight -
-                          (graphHeight *
-                            (counter * ((maxTemp - minTemp) / 6))) /
-                            (maxTemp - minTemp)
-                        }
-                      ></line>
-                    </>
-                  );
-                })}
+                <line
+                  className="dottedgrid"
+                  x1="70"
+                  x2={width}
+                  y1={
+                    graphHeight -
+                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                      (maxTemp - minTemp)
+                  }
+                  y2={
+                    graphHeight -
+                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+                      (maxTemp - minTemp)
+                  }
+                ></line>
               </>
             );
           })}
+
         <text x="50" y={height / 2} className="label-title"></text>
       </g>
 
       <g className="data">
-        {(counter = 0)}
-        {organizedForecast &&
-          organizedForecast.map((ele, j) => {
-            if (dailyGraphData > j) {
-              return null;
-            }
+        {currentDay &&
+          currentDay.length > 0 &&
+          currentDay.map((data, i) => {
+            const counter = i + 1;
+            maxTemp = minTemp + 60;
+
             return (
               <>
-                {ele.map((data) => {
-                  if (counter > 9) return null;
-                  counter++;
-
-                  return (
-                    <>
-                      <circle
-                        cx={33 + (counter / 9) * graphWidth}
-                        cy={
-                          ((maxTemp - convertKtoF(data.main.temp)) /
-                            (maxTemp - minTemp)) *
-                          graphHeight
-                        }
-                        data-value={convertKtoF(data.main.temp)}
-                        r="4"
-                        key={`dataPoints,${counter}`}
-                      >
-                        {convertKtoF(data.main.temp)}
-                      </circle>
-                      <text
-                        x={33 + (counter / 9) * graphWidth}
-                        y={
-                          ((maxTemp - convertKtoF(data.main.temp)) /
-                            (maxTemp - minTemp)) *
-                            graphHeight -
-                          5
-                        }
-                      >
-                        {convertKtoF(data.main.temp)}
-                      </text>
-                    </>
-                  );
-                })}
+                <circle
+                  cx={33 + (counter / 9) * graphWidth}
+                  cy={
+                    ((maxTemp - convertKtoF(data.main.temp)) /
+                      (maxTemp - minTemp)) *
+                    graphHeight
+                  }
+                  data-value={convertKtoF(data.main.temp)}
+                  r="4"
+                  key={`dataPoints,${counter}`}
+                >
+                  {convertKtoF(data.main.temp)}
+                </circle>
+                <text
+                  x={33 + (counter / 9) * graphWidth}
+                  y={
+                    ((maxTemp - convertKtoF(data.main.temp)) /
+                      (maxTemp - minTemp)) *
+                      graphHeight -
+                    5
+                  }
+                >
+                  {convertKtoF(data.main.temp)}
+                </text>
               </>
             );
           })}
