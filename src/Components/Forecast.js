@@ -38,13 +38,13 @@ function Forecast() {
   const [data, setData] = useState();
 
   async function updateData() {
-    const data = await fetchWeatherCurrent(id);
+    const data = await fetchWeatherCurrent(id, true);
     dispatch({
       type: "add_location",
-      activeLocation: data.name,
+      activeLocation: `${data.coord.lat},${data.coord.lon}`,
       locationsData: {
         ...state.locationsData,
-        [data.name]: { ...data },
+        [`${data.coord.lat},${data.coord.lon}`]: { ...data },
       },
     });
   }
@@ -54,14 +54,14 @@ function Forecast() {
       state &&
       (state.expandLocation === "" || state.expandLocation === undefined)
     ) {
-      const data = await fetchWeatherCurrent(id);
+      const data = await fetchWeatherCurrent(id, true);
 
       dispatch({
         type: "add_location",
-        activeLocation: data.name,
+        activeLocation: `${data.coord.lat},${data.coord.lon}`,
         locationsData: {
           ...state.locationsData,
-          [data.name]: { ...data },
+          [`${data.coord.lat},${data.coord.lon}`]: { ...data },
         },
       });
       setData(data);
@@ -70,7 +70,10 @@ function Forecast() {
     }
   }
   async function fetchForecast() {
-    const hourlyData = await fetchHourlyForecast(state.expandLocation || id);
+    const hourlyData = await fetchHourlyForecast(
+      state.expandLocation || id,
+      true
+    );
     const grouped = groupBy(hourlyData);
     setForecast(reduceHourlyData(grouped));
     setOrganizedForecast(grouped);

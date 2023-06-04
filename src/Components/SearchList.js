@@ -6,9 +6,7 @@ import { MyDispatch, MyState } from "../ReducerTopComponent";
 function SearchList({ location, setSearchTerm }) {
   const dispatch = useContext(MyDispatch);
   const state = useContext(MyState);
-  useEffect(() => {
-  
-  }, []);
+  useEffect(() => {}, []);
 
   async function processNewLocation(e) {
     e.preventDefault();
@@ -20,8 +18,10 @@ function SearchList({ location, setSearchTerm }) {
       .then((data) => {
         dispatch({
           type: "add_location",
-          activeLocation: data.name,
-          locationsData: { ...state.locationsData, [data.name]: { ...data } },
+          activeLocation: `${data.coord.lat},${data.coord.lon}`,
+          locationsData: {
+            [`${data.coord.lat},${data.coord.lon}`]: { ...data },
+          },
         });
         dispatch({ type: "error", error: "" });
       })

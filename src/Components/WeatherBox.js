@@ -44,10 +44,10 @@ function WeatherBox({ data, num }) {
         <Link
           onClick={toggleView}
           className="weatherdetails"
-          to={`/location/${data.name}`}
+          to={`/location/${data.coord.lat},${data.coord.lon}`}
           // href={`/location/${location}`}
-          key-location={`${data.name}${0}`}
-          data-location={data.name}
+          key-location={`${data.coord.lat},${data.coord.lon}${0}`}
+          data-location={`${data.coord.lat},${data.coord.lon}`}
         >
           <WeatherBoxData data={data}></WeatherBoxData>
           <div onClick={handleDelete} className="deleteContainer">

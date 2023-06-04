@@ -161,7 +161,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   counter++;
 
                   return (
-                    <>
+                    < >
                       <circle
                         cx={33 + (counter / 9) * graphWidth}
                         cy={

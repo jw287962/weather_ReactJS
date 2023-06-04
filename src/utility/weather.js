@@ -38,52 +38,55 @@ function updateTimeZone(origTime) {
   const formatted = formatMSTime(newTime, "eeePPp");
   return formatted.split(",");
 }
-async function fetchHourlyForecast(location = "") {
+async function fetchHourlyForecast(location = "", convertToCoordObject) {
   if (location === "") {
     return;
   }
+
   try {
-    const city = location;
-    const promise = await fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=19d6b05066109b1f4f25ae216d98acf3`,
-      { mode: "cors" }
-    );
+    let fetchString = "";
+    if (convertToCoordObject) {
+      // this converts from stored string IE: "34.7367,-86.7519"
+      const splitter = location.split(",");
+      location = { coords: { longitude: splitter[1], latitude: splitter[0] } };
+      fetchString = `https://api.openweathermap.org/data/2.5/forecast?lat=${location.coords.latitude}&lon=${location.coords.longitude}&appid=19d6b05066109b1f4f25ae216d98acf3`;
+    } else {
+      fetchString = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=19d6b05066109b1f4f25ae216d98acf3`;
+    }
 
+    const promise = await fetch(fetchString, { mode: "cors" });
     const newData = await promise.json();
-
     // timezoneOffset = newData.city.timezone;
     const holder = newData.list;
     // const result = groupBy(holder);
     return holder;
   } catch (err) {
+    console.log("error", err);
     throw new Error("ERROR:" + err);
   }
 }
-// function getDate(element, num) {
-//   const addNum = num * 86400000 + element.dt;
 
-//   const date = format(addNum, "iiiiii");
-//   return date;
-// }
 function getDescriptionForecast(element) {
   const description = element.weather[0].description;
 
   let holder = capitalizeFirstLetter(description);
   return holder;
 }
-// function getTemperature(element) {
-//   const currentTemp = element.main.temp;
-
-//   const newTemp = (1.8 * (currentTemp - 273) + 32).toFixed(0);
-
-//   return newTemp;
-// }
 
 function getProcessedForecast() {
   return processedForecast;
 }
 
-async function fetchWeatherCurrent(location = "Madison") {
+async function fetchWeatherCurrent(
+  location = "Madison",
+  convertToCoordObject = false
+) {
+  if (convertToCoordObject) {
+    // this converts from stored string IE: "34.7367,-86.7519"
+    const splitter = location.split(",");
+    location = { coords: { longitude: splitter[1], latitude: splitter[0] } };
+  }
+
   try {
     // content.textContent = "loading ... (please wait)";
     if (location && location.coords) {

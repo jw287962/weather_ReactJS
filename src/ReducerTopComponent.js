@@ -40,13 +40,13 @@ function Reducer() {
       if (cookieArray)
         for (let i = 0; i < cookieArray.length; i++) {
           const city = cookieArray[i];
-          fetchWeatherCurrent(city)
+          fetchWeatherCurrent(city, true)
             .then((data) => {
               dispatch({
                 type: "add_location",
-                activeLocation: data.name,
+                activeLocation: `${data.coord.lat},${data.coord.lon}`,
                 locationsData: {
-                  [data.name]: { ...data },
+                  [`${data.coord.lat},${data.coord.lon}`]: { ...data },
                 },
               });
               dispatch({ type: "error", error: "" });
