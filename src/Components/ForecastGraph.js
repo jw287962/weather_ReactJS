@@ -224,6 +224,24 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                 >
                   {convertKtoF(data.main.temp)}
                 </text>
+                {counter + 1 < currentDay.length && (
+                  <line
+                    className="dataLine"
+                    x1={calcXLabelPosition(counter)}
+                    y1={
+                      ((maxTemp - convertKtoF(data.main.temp)) /
+                        (maxTemp - minTemp)) *
+                      graphHeight
+                    }
+                    x2={calcXLabelPosition(counter + 1)}
+                    y2={
+                      ((maxTemp -
+                        convertKtoF(currentDay[`${counter + 1}`].main.temp)) /
+                        (maxTemp - minTemp)) *
+                      graphHeight
+                    }
+                  ></line>
+                )}
               </>
             );
           })}
