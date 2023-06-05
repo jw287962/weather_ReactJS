@@ -6,7 +6,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
   const [width, setWidth] = useState(400);
   // document.querySelector(".graph")?.clientWidth || 500;
   const height = document.querySelector(".graph")?.clientHeight || 300;
-
+  const rightOffset = 8;
   const graphHeight = height - 50;
   const yLabelHorizWidth = 50;
 
@@ -21,8 +21,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
   const [currentDay, setCurrentDay] = useState([]);
 
   const [graphWidth, setGraphWidth] = useState(width - yLabelHorizWidth);
-
-  const eachDataPointDistance = width / 9;
 
   useEffect(() => {
     setWidth(document.querySelector(".graph").clientWidth);
@@ -42,25 +40,27 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     };
   }, []);
   function handleHover(e) {
+    const eachDataPointDistance = (width - rightOffset) / 9;
+
     if (resized) {
       const svg = document.querySelector(".graph");
-      distFromLeftEdge.current = svg.getBoundingClientRect().x;
+      distFromLeftEdge.current = svg.getBoundingClientRect().x + 4;
       setResized(false);
     }
 
-    let currentXOnSVG =
-      e.clientX - distFromLeftEdge.current - graphMiniboxWidth / 2;
-
+    let currentXOnSVG = e.clientX - distFromLeftEdge.current;
+    // console.log(
+    //   currentXOnSVG,
+    //   distFromLeftEdge.current,
+    //   eachDataPointDistance,
+    //   "|",
+    //   currentXOnSVG / eachDataPointDistance -1
+    // );
     setCurrentPoint(
-      Math.max(
-        Math.round(
-          (currentXOnSVG + graphMiniboxWidth / 2) / eachDataPointDistance
-        ) - 1,
-        0
-      )
+      Math.max(Math.round(currentXOnSVG / eachDataPointDistance - 1), 0)
     );
 
-    setHorizontalValue(currentXOnSVG);
+    setHorizontalValue(currentXOnSVG - graphMiniboxWidth / 2);
   }
 
   useEffect(() => {
@@ -93,7 +93,8 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
   }
 
   function calcXLabelPosition(counter) {
-    return (counter / 9) * width + yLabelHorizWidth - counter * 1.5;
+    const value = counter > 0 ? 1 : 0;
+    return (counter / 9) * width + yLabelHorizWidth - value * rightOffset;
   }
   function limitHorizontalValue(currentXOnSVG) {
     currentXOnSVG = Math.max(yLabelHorizWidth, currentXOnSVG);
@@ -247,22 +248,23 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
           })}
       </g>
 
-      {horizontalValue && (
-        <g>
-          <rect
-            x={limitHorizontalValue(horizontalValue)}
-            y="20"
-            width="120"
-            height="40"
-            className="rectangleData"
-          ></rect>
+      {/* {horizontalValue && ( */}
+      <g>
+        <rect
+          x={limitHorizontalValue(horizontalValue)}
+          y="20"
+          width="120"
+          height="40"
+          className="rectangleData"
+        ></rect>
 
-          <text x={limitHorizontalValue(horizontalValue) + 2} y="35">
-            {currentDay[`${Math.min(currentPoint, 8)}`]?.weather[0].description}
-          </text>
-          <text x={limitHorizontalValue(horizontalValue) + 2} y="55">
-            {currentDay[`${Math.min(currentPoint, 8)}`]?.dt_txt.time}
-          </text>
+        <text x={limitHorizontalValue(horizontalValue) + 2} y="35">
+          {currentDay[`${Math.min(currentPoint, 8)}`]?.weather[0].description}
+        </text>
+        <text x={limitHorizontalValue(horizontalValue) + 2} y="55">
+          {currentDay[`${Math.min(currentPoint, 8)}`]?.dt_txt.time}
+        </text>
+        {horizontalValue && (
           <line
             className="dottedgrid"
             x1={Math.max(
@@ -276,8 +278,9 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             )}
             y2={graphHeight}
           ></line>
-        </g>
-      )}
+        )}
+      </g>
+      {/* )} */}
     </svg>
   );
 }
