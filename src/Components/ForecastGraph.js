@@ -7,9 +7,13 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
   const height = document.querySelector(".graph")?.clientHeight || 300;
 
   const graphHeight = height - 50;
-  const graphWidth = width - 70;
-  const pointDiff = graphWidth / 9;
+  const yLabelHorizWidth = 70;
+
+  const graphWidth = width - yLabelHorizWidth;
+
+  const eachDataPointDistance = graphWidth / 9;
   const [currentPoint, setCurrentPoint] = useState(0);
+  const graphMiniboxWidth = 120;
 
   let minTemp = 150;
   let maxTemp = 0;
@@ -28,16 +32,18 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       resized.current = false;
     }
 
-    let currentXOnSVG = e.clientX - distFromLeftEdge.current - 60;
+    let currentXOnSVG =
+      e.clientX - distFromLeftEdge.current - graphMiniboxWidth / 2;
 
-    setCurrentPoint(Math.round(currentXOnSVG / pointDiff - 0.49));
-    console.log(currentPoint);
+    setCurrentPoint(
+      Math.max(Math.round(currentXOnSVG / eachDataPointDistance - 0.49), 0)
+    );
 
     setHorizontalValue(currentXOnSVG);
   }
 
   function limitHorizontalValue(currentXOnSVG) {
-    currentXOnSVG = Math.max(70, currentXOnSVG);
+    currentXOnSVG = Math.max(yLabelHorizWidth, currentXOnSVG);
     currentXOnSVG = Math.min(graphWidth - 51, currentXOnSVG);
     return currentXOnSVG;
   }
@@ -65,9 +71,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setCurrentDay(dataPoints);
   }, [organizedForecast, dailyGraphData]);
 
-  useEffect(() => {
-    console.log(currentDay);
-  }, [currentDay]);
+  useEffect(() => {}, [currentDay]);
 
   // useEffect(() => {}, [height]);
   return (
@@ -99,12 +103,13 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
         {currentDay &&
           currentDay.length > 0 &&
           currentDay.map((data, i) => {
+            const counter = i + 1;
             minTemp = findMin(convertKtoF(data.main.temp) - 10, minTemp);
 
             return (
               <>
                 <text
-                  x={25 + ((i + 1) / 9) * graphWidth}
+                  x={25 + (counter / 9) * graphWidth}
                   y={graphHeight + 25}
                   key={`x-axis,${i + 1}`}
                 >
@@ -115,7 +120,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   )}
                 </text>
                 <line
-                  x1={((i + 1) / 9) * graphWidth}
+                  x1={(counter / 9) * graphWidth}
                   x2={width}
                   y1={graphHeight + 25}
                   y2={graphHeight + 25}
@@ -230,9 +235,15 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
           )}
           <line
             className="dottedgrid"
-            x1={Math.max(horizontalValue + 60, 70)}
+            x1={Math.max(
+              horizontalValue + graphMiniboxWidth / 2,
+              yLabelHorizWidth
+            )}
             y1="0"
-            x2={Math.max(horizontalValue + 60, 70)}
+            x2={Math.max(
+              horizontalValue + graphMiniboxWidth / 2,
+              yLabelHorizWidth
+            )}
             y2={graphHeight}
           ></line>
         </g>
