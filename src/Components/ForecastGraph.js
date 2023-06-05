@@ -86,6 +86,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       width={width}
       onMouseMove={handleHover}
       onMouseLeave={handleLeave}
+      onTouchMove={handleHover}
       // transform=""
     >
       {/* <title id="title">Weather Next 24 Hrs </title> */}
