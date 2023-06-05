@@ -63,16 +63,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setHorizontalValue(currentXOnSVG);
   }
 
-  function limitHorizontalValue(currentXOnSVG) {
-    currentXOnSVG = Math.max(yLabelHorizWidth, currentXOnSVG);
-    currentXOnSVG = Math.min(width - graphMiniboxWidth, currentXOnSVG);
-    return currentXOnSVG;
-  }
-
-  function handleLeave(e) {
-    setHorizontalValue(0);
-    setCurrentPoint(0);
-  }
   useEffect(() => {
     // setCurrentDay([data]);
     const dataPoints = [];
@@ -94,6 +84,27 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
 
   useEffect(() => {}, [currentDay]);
 
+  function calcYLabelPosition(counter) {
+    return (
+      graphHeight -
+      (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
+        (maxTemp - minTemp)
+    );
+  }
+
+  function calcXLabelPosition(counter) {
+    return (counter / 9) * width + yLabelHorizWidth - counter * 1.5;
+  }
+  function limitHorizontalValue(currentXOnSVG) {
+    currentXOnSVG = Math.max(yLabelHorizWidth, currentXOnSVG);
+    currentXOnSVG = Math.min(width - graphMiniboxWidth, currentXOnSVG);
+    return currentXOnSVG;
+  }
+
+  function handleLeave(e) {
+    setHorizontalValue(0);
+    setCurrentPoint(0);
+  }
   return (
     // 500 x 800 size
     <svg
@@ -129,7 +140,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             return (
               <>
                 <text
-                  x={(counter / 9) * width + yLabelHorizWidth - 10}
+                  x={calcXLabelPosition(counter) - 9}
                   y={graphHeight + 25}
                   key={`x-axis,${counter + 1}`}
                 >
@@ -160,11 +171,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
               <>
                 <text
                   x="40"
-                  y={
-                    graphHeight -
-                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
-                      (maxTemp - minTemp)
-                  }
+                  y={calcYLabelPosition(counter)}
                   key={`y-axis,${counter}`}
                 >
                   {minTemp + counter * 10} °F
@@ -174,16 +181,8 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   className="dottedgrid"
                   x1="50"
                   x2={width}
-                  y1={
-                    graphHeight -
-                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
-                      (maxTemp - minTemp)
-                  }
-                  y2={
-                    graphHeight -
-                    (graphHeight * (counter * ((maxTemp - minTemp) / 6))) /
-                      (maxTemp - minTemp)
-                  }
+                  y1={calcYLabelPosition(counter)}
+                  y2={calcYLabelPosition(counter)}
                 ></line>
               </>
             );
@@ -202,7 +201,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
             return (
               <>
                 <circle
-                  cx={(counter / 9) * width + yLabelHorizWidth}
+                  cx={calcXLabelPosition(counter)}
                   cy={
                     ((maxTemp - convertKtoF(data.main.temp)) /
                       (maxTemp - minTemp)) *
@@ -215,7 +214,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
                   {convertKtoF(data.main.temp)}
                 </circle>
                 <text
-                  x={(counter / 9) * width + yLabelHorizWidth - 9}
+                  x={calcXLabelPosition(counter) - 10}
                   y={
                     ((maxTemp - convertKtoF(data.main.temp)) /
                       (maxTemp - minTemp)) *
@@ -241,12 +240,10 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
           ></rect>
 
           <text x={limitHorizontalValue(horizontalValue) + 2} y="35">
-            {currentDay &&
-              currentDay.length > 0 &&
-              currentDay[`${Math.min(currentPoint, 8)}`].weather[0].description}
+            {currentDay[`${Math.min(currentPoint, 8)}`]?.weather[0].description}
           </text>
           <text x={limitHorizontalValue(horizontalValue) + 2} y="55">
-            {currentDay[`${Math.min(currentPoint, 8)}`].dt_txt.time}
+            {currentDay[`${Math.min(currentPoint, 8)}`]?.dt_txt.time}
           </text>
           <line
             className="dottedgrid"
