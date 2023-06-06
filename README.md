@@ -7,7 +7,9 @@
 - Search Locations will display real and relevant locations (once user stops typing for 1 second)
 - Click a displayed loation and it will load the data for the location.
 
-2.  CLICK THE WEATHER CARD TO GET INDEPTH DETAILS. click Title to return back to home page
+2.  CLICK THE WEATHER CARD TO GET IN-DEPTH DETAILS. click Title to return back to home page
+
+3.  Graph Data (Mouse Hover or Finger Drag to get weather details)
 
 ## VIA OpenweatherAPI
 
