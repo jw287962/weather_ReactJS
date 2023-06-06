@@ -87,7 +87,7 @@ function Reducer() {
         element: <App />,
       },
       {
-        path: "/location/:id",
+        path: "location/:id",
         element: <Forecast></Forecast>,
       },
     ],

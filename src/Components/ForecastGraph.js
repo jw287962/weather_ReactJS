@@ -40,7 +40,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     };
   }, []);
   function handleHover(e) {
-    console.log(e);
     const eachDataPointDistance = (width - rightOffset) / 9;
     let currentXOnSVG;
     if (resized) {
