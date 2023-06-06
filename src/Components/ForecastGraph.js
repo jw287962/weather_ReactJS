@@ -40,22 +40,19 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     };
   }, []);
   function handleHover(e) {
+    console.log(e);
     const eachDataPointDistance = (width - rightOffset) / 9;
-
+    let currentXOnSVG;
     if (resized) {
       const svg = document.querySelector(".graph");
       distFromLeftEdge.current = svg.getBoundingClientRect().x + 4;
       setResized(false);
     }
-
-    let currentXOnSVG = e.clientX - distFromLeftEdge.current;
-    // console.log(
-    //   currentXOnSVG,
-    //   distFromLeftEdge.current,
-    //   eachDataPointDistance,
-    //   "|",
-    //   currentXOnSVG / eachDataPointDistance -1
-    // );
+    if (e.type === "touchmove") {
+      currentXOnSVG = e.changedTouches[0].clientX;
+    } else {
+      currentXOnSVG = e.clientX - distFromLeftEdge.current;
+    }
     setCurrentPoint(
       Math.max(Math.round(currentXOnSVG / eachDataPointDistance - 1), 0)
     );
@@ -106,6 +103,9 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setHorizontalValue(0);
     setCurrentPoint(0);
   }
+  function handleStart(e) {
+    console.log(e);
+  }
   return (
     // 500 x 800 size
     <svg
@@ -119,6 +119,7 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       onMouseMove={handleHover}
       onMouseLeave={handleLeave}
       onTouchMove={handleHover}
+      onTouchStart={handleStart}
       // transform=""
     >
       {/* <title id="title">Weather Next 24 Hrs </title> */}

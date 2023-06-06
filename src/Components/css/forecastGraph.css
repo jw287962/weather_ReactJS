@@ -57,7 +57,6 @@
 
 .dataLine {
   stroke: orange;
-  
 }
 @media only screen and (max-width: 700px) {
   .graphContainer {
@@ -68,20 +67,20 @@
 }
 @media only screen and (max-width: 550px) {
   .graph {
-    width: 420px;
+    max-width: 500px;
   }
 }
 
 @media only screen and (max-width: 480px) {
   .graph {
-    width: 400px;
+    width: 98vw;
   }
 }
 
 @media only screen and (max-width: 400px) {
-  .graph {
-    width: 380px;
-  }
+  /* .graph {
+    max-width: 380px;
+  } */
   .y-labels,
   .x-labels {
     display: none;

@@ -246,11 +246,10 @@ button:active {
     align-items: normal;
   }
 }
-
+.weatherdetails {
+  padding: 10px 0px;
+}
 @media only screen and (max-width: 400px) {
-  .weatherdetails {
-    padding: 10px 0px;
-  }
   .day,
   .temperature {
     font-size: 20px;
