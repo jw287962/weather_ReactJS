@@ -103,9 +103,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
     setHorizontalValue(0);
     setCurrentPoint(0);
   }
-  function handleStart(e) {
-    console.log(e);
-  }
   return (
     // 500 x 800 size
     <svg
@@ -119,7 +116,6 @@ function ForcastGraph({ organizedForecast, dailyGraphData }) {
       onMouseMove={handleHover}
       onMouseLeave={handleLeave}
       onTouchMove={handleHover}
-      onTouchStart={handleStart}
       // transform=""
     >
       {/* <title id="title">Weather Next 24 Hrs </title> */}
