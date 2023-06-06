@@ -1,5 +1,7 @@
 # NOTES
 
+# Utilizes OpenweatherAPI to fetch weather details (Free Tier, limited Data)
+
 ## HOW TO USE:
 
 1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOUR CURRENT LOCATIONS WEATHER DATA)
@@ -11,9 +13,7 @@
 
 3.  Graph Data (Mouse Hover or Finger Drag to get weather details)
 
-## VIA OpenweatherAPI
-
-Current:
+# Current:
 
 - Search (or/and location based) to grab city data. (Click card to get more details)
 - can add multiple cards each holding a different location to navigate into for more detailsw
