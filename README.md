@@ -22,6 +22,8 @@ Current:
 - v1.4 Search Locations will display real and relevant locations (once user stops typing for 1 second)
   - Click and it will load the data for the location.
 - v1.5 Implements media queries for mobile view 
+- v1.6 Graph supports drag on mobile and hover 
+  - Displays correct weather details based on location of hover and nearest point
 
 
 
@@ -31,11 +33,11 @@ Current:
 
 (✓) Improve API call to allow more specific searches, and to show search results while searching.
 
-- show specific data on the graph when cilcking a point or hovering...?..
-  - should put an element that displays details around mouse when it is close to the point
+(✓) show specific data on the graph when cilcking a point or hovering...?..
+  (✓) should put an element that displays details around mouse when it is close to the point
 - add a way so user can change refresh timer based on preferences.
 
-(✓)utilizes unique naming system by keeping track of lat and long instead of city name that can overlap with other cities
+(✓) utilizes unique naming system by keeping track of lat and long instead of city name that can overlap with other cities
 
 - in depth detail should grab correct location instead of a random Madison city if there are more than one same city name
 
