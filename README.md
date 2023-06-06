@@ -1,6 +1,6 @@
 # NOTES
 
-# Utilizes OpenweatherAPI to fetch weather details (Free Tier, limited Data)
+### Utilizes OpenweatherAPI to fetch weather details (Free Tier, limited Data)
 
 ## HOW TO USE:
 
