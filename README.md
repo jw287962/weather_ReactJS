@@ -2,6 +2,9 @@
 
 ### Utilizes OpenweatherAPI to fetch weather details (Free Tier, limited Data)
 
+State Management: useReducer
+ReactJS
+
 ## HOW TO USE:
 
 1.  SEARCH FOR LOCATION (OR ACCEPT LOCATION LOOKUP AND IT WILL GRAB YOUR CURRENT LOCATIONS WEATHER DATA)
@@ -47,6 +50,8 @@
 changed some data that is returned
 
 1. dt_txt: is updated to hold {date: 'May 28,2023', time: '4:00 PM'}
+
+---
 
 # Getting Started with Create React App
 
